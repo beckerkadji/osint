@@ -330,11 +330,9 @@ export default function Search() {
                                                                                 <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill /></Link>
                                                                             </p>
                                                                         ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 flex  justify-between">{item.links?.map((item: any, key:any) => (
-                                                                            <p className="" key={key}>
-                                                                                <Link href={item} target='_blank'>{item}</Link>
-                                                                            </p>
-                                                                        ))}</td>
+                                                                        <td className="whitespace-nowrap  px-6 flex  justify-between"> 
+                                                                            link here
+                                                                        </td>
                                                                     </tr>
                                                                 ))
                                                             }
