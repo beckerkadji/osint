@@ -334,7 +334,7 @@ export default function Search() {
                                                                         ))}</td>
                                                                         <td className="whitespace-nowrap  px-6 py-4">{item.links?.map((item: any, key:any) => (
                                                                             <p className="w-[6rem] h-[4rem] relative " key={key}>
-                                                                                <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill />  </Link>
+                                                                                <p>{item}</p>
                                                                             </p>
                                                                         ))}</td>
                                                                     </tr>
