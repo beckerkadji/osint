@@ -8,8 +8,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
         {
-            protocol: "http",
-            hostname: "localhost",
+          protocol: "https",
+          hostname: "**",
+        },
+        {
+          protocol: "http",
+          hostname: "**",
         },
     ],
     minimumCacheTTL: 15000000,
