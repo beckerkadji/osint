@@ -312,19 +312,17 @@ export default function Search() {
                                                                 userdata?.data.map((item: any, key:number)=>(
                                                                     <tr className="border-b text-blackcolor" key={key}>
                                                                         <td className="whitespace-nowrap  px-6 py-4 font-medium">{key}</td>
-                                                                        <td className="whitespace-nowrap  px-6 py-4">{item.names?.map((item: any, key:any) => (
+                                                                        <td className="">{item.names?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 py-4">{item.phones?.map((item: any, key:any) => (
+                                                                        <td className="">{item.phones?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 py-4">{item.emails?.map((item: any, key:any) => (
+                                                                        <td className="">{item.emails?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 py-4">{item.usernames?.map((item: any, key:any) => (
-                                                                            <p key={key}>{item}</p>
-                                                                        ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 py-4">{item.addresses?.map((item: any, key:any) => (
+                                                                        <td className="">{item.usernames[0]}</td>
+                                                                        <td className="">{item.addresses?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
                                                                         <td className="whitespace-nowrap  px-6 flex  justify-between">{item.images?.map((item: any, key:any) => (
@@ -332,9 +330,9 @@ export default function Search() {
                                                                                 <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill /></Link>
                                                                             </p>
                                                                         ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 py-4">{item.links?.map((item: any, key:any) => (
-                                                                            <p className="w-[6rem] h-[4rem] relative " key={key}>
-                                                                                <p>{item}</p>
+                                                                        <td className="whitespace-nowrap  px-6 flex  justify-between">{item.links?.map((item: any, key:any) => (
+                                                                            <p className="" key={key}>
+                                                                                <Link href={item} target='_blank'>{item}</Link>
                                                                             </p>
                                                                         ))}</td>
                                                                     </tr>
