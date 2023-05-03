@@ -1,17 +1,16 @@
 /** @type {import('next').NextConfig} */
 
-const securityHeaders = [
-  {
-    key: 'Content-Secutity-Policy',
-    value: "default-src *"
-  }
-]
 const nextConfig = {
   async headers(){
     return [
       {
         source: '/(.*)',
-        headers: securityHeaders
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src *"
+          }
+        ]
       }
     ]
   },
