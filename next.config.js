@@ -1,5 +1,20 @@
 /** @type {import('next').NextConfig} */
+
+const securityHeaders = [
+  {
+    key: 'Content-Secutity-Policy',
+    value: "default-src *"
+  }
+]
 const nextConfig = {
+  async headers(){
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders
+      }
+    ]
+  },
   reactStrictMode: true,
   swcMinify: true,
   experimental:{
