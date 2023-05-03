@@ -8,7 +8,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src *"
+            value: "default-src 'self' 'http://35.181.28.82:8080' "
           }
         ]
       }
