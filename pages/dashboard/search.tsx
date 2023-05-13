@@ -352,7 +352,7 @@ export default function Search() {
                                         </div>
                                     </div>
                                 }
-{/* 
+
                                 <div className='h-full w-full'>
                                     {isLoaded ?  
                                     <div>
@@ -362,7 +362,7 @@ export default function Search() {
                                         <GoogleMap zoom={10} center={{lat: 44, lng: -88}} mapContainerClassName="w-full h-full"></GoogleMap>
                                     </div>
                                     }
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>
