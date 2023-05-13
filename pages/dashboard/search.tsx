@@ -23,9 +23,9 @@ import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 export default function Search() {
   
 
-  const {isLoaded} = useLoadScript({ 
-    googleMapsApiKey:'AIzaSyDRX0D21tjCpNmpABQp8bnfNyA99pscQrM'
-  })
+//   const {isLoaded} = useLoadScript({ 
+//     googleMapsApiKey:'AIzaSyDRX0D21tjCpNmpABQp8bnfNyA99pscQrM'
+//   })
 
   const router = useRouter()
   const [userdata, setData] = useState<any>()
@@ -353,7 +353,7 @@ export default function Search() {
                                     </div>
                                 }
 
-                                <div className='h-full w-full'>
+                                {/* <div className='h-full w-full'>
                                     {isLoaded ?  
                                     <div>
                                         is loading
@@ -362,7 +362,7 @@ export default function Search() {
                                         <GoogleMap zoom={10} center={{lat: 44, lng: -88}} mapContainerClassName="w-full h-full"></GoogleMap>
                                     </div>
                                     }
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
