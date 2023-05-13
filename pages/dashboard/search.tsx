@@ -18,9 +18,15 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 
 export default function Search() {
   
+
+  const {isLoaded} = useLoadScript({ 
+    googleMapsApiKey:`${process.env.NEXT_PUBLIC_API_KEY}`
+  })
+
   const router = useRouter()
   const [userdata, setData] = useState<any>()
   const [load, setLoad] = useState<boolean>(false)
@@ -346,6 +352,17 @@ export default function Search() {
                                         </div>
                                     </div>
                                 }
+
+                                <div className='h-full w-full'>
+                                    {isLoaded ?  
+                                    <div>
+                                        is loading
+                                    </div> :
+                                    <div>
+                                        <GoogleMap zoom={10} center={{lat: 44, lng: -88}} mapContainerClassName="w-full h-full"></GoogleMap>
+                                    </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

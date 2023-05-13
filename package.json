@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
     "@joi/date": "^2.1.0",
+    "@react-google-maps/api": "^2.18.1",
     "@types/node": "18.11.13",
     "@types/nprogress": "^0.2.0",
     "@types/react": "18.0.26",
