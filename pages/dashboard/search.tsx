@@ -24,7 +24,7 @@ export default function Search() {
   
 
   const {isLoaded} = useLoadScript({ 
-    googleMapsApiKey:`${process.env.NEXT_PUBLIC_API_KEY}`
+    googleMapsApiKey:'AIzaSyDRX0D21tjCpNmpABQp8bnfNyA99pscQrM'
   })
 
   const router = useRouter()
