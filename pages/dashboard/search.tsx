@@ -29,8 +29,9 @@ export default function Search() {
   const router = useRouter()
   const [userdata, setData] = useState<any>()
   const [load, setLoad] = useState<boolean>(false)
+  const [displayMap, setDisplayMap] = useState<boolean>(false)
   const [org, setOrg] = useState<any>({});
-  const [center, setCenter] = useState([50.879, 4.6997])
+  const [center, setCenter] = useState<any>([50.879, 4.6997])
   const [zoom, setZoom] = useState(11)
 
   const {
@@ -86,6 +87,8 @@ export default function Search() {
     }else{
         setData(res.data)
         setLoad(false)
+        setDisplayMap(true)
+
         // let orgData = orgChat(userdata, data)
         // setOrg(orgData)
     }
@@ -274,25 +277,26 @@ export default function Search() {
                                                             }
                                                     </tbody>
                                                     </table>
+                                                    {
+                                                        displayMap ?
+                                                        <div className='h-full w-full'>
+                                                            <div>
+                                                                <Map height={300} center={center} defaultZoom={11}>
+                                                                    <Marker width={50} anchor={center} />
+                                                                </Map>
+                                                            </div>
+                                                        </div> :
+                                                        <div>
+                                                            map here
+                                                        </div>
+                                                    }
+                
                                                 </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 }
-
-                                <div className='h-full w-full'>
-                                    {load == false?  
-                                    <div>
-                                        is loading Map...
-                                    </div> :
-                                    <div>
-                                        <Map height={300} defaultCenter={[50.879, 4.6997]} defaultZoom={11}>
-                                            <Marker width={50} anchor={[50.879, 4.6997]} />
-                                        </Map>
-                                    </div>
-                                    } 
-                                </div>
                             </div>
                         </div>
                     </div>
