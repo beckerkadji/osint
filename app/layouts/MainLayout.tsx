@@ -7,7 +7,7 @@ type MainLayoutProps = {
 export const MainLayout : FunctionComponent<MainLayoutProps> = ({children}) => {
     return (
         <>
-            <div className="px-10 py-5">{children}</div>
+            <div>{children}</div>
         </>
     );
 };
