@@ -17,7 +17,7 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import Map from 'react-map-gl'
 
 
 export default function Search() {
@@ -349,17 +349,14 @@ export default function Search() {
                                 }
 
                                 <div className='h-full w-full'>
-                                {/* <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-                                    <TileLayer
-                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                        url="https://api.maptiler.com/maps/basic-v2/tiles.json?key=6ioyCpoAEm4wkYohEsdT"
-                                    />
-                                    <Marker position={[51.505, -0.09]}>
-                                        <Popup>
-                                        A pretty CSS3 popup. <br /> Easily customizable.
-                                        </Popup>
-                                    </Marker>
-                                </MapContainer> */}
+                                <Map
+                                    latitude={-122.4}
+                                    longitude={37.8}
+                                    zoom={14}
+                                    width={600}
+                                    height={400}
+                                    mapStyle="mapbox://styles/mapbox/streets-v9"
+                                />
                                 </div>
                             </div>
                         </div>
