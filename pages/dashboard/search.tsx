@@ -17,7 +17,6 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
-import Map from 'react-map-gl'
 
 
 export default function Search() {
@@ -349,14 +348,7 @@ export default function Search() {
                                 }
 
                                 <div className='h-full w-full'>
-                                <Map
-                                    latitude={-122.4}
-                                    longitude={37.8}
-                                    zoom={14}
-                                    width={600}
-                                    height={400}
-                                    mapStyle="mapbox://styles/mapbox/streets-v9"
-                                />
+
                                 </div>
                             </div>
                         </div>
