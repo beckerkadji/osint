@@ -18,28 +18,20 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import {  GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { Map, Marker } from "pigeon-maps"
+
+
 
 export default function Search() {
-  
-  const containerStyle = {
-    width: '400px',
-    height: '400px'
-  };
-  const center = {
-    lat: -3.745,
-    lng: -38.523
-  };
-  const { isLoaded } = useJsApiLoader({ 
-    id: 'google-map-script',
-    googleMapsApiKey: apiKey
-  })
 
+  
   const router = useRouter()
   const [userdata, setData] = useState<any>()
   const [load, setLoad] = useState<boolean>(false)
   const [org, setOrg] = useState<any>({});
-
+  const [center, setCenter] = useState([50.879, 4.6997])
+  const [zoom, setZoom] = useState(11)
 
   const {
     register,  
@@ -290,14 +282,16 @@ export default function Search() {
                                 }
 
                                 <div className='h-full w-full'>
-                                    {isLoaded ?  
+                                    {load == false?  
                                     <div>
                                         is loading Map...
                                     </div> :
                                     <div>
-                                        {/* <GoogleMap zoom={10} center={{lat: 44, lng: -88}} mapContainerClassName="w-full h-full"></GoogleMap> */}
+                                        <Map height={300} defaultCenter={[50.879, 4.6997]} defaultZoom={11}>
+                                            <Marker width={50} anchor={[50.879, 4.6997]} />
+                                        </Map>
                                     </div>
-                                    }
+                                    } 
                                 </div>
                             </div>
                         </div>
