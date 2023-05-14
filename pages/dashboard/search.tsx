@@ -18,15 +18,11 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { TileLayer } from 'react-leaflet';
+import { MapContainer } from 'react-leaflet/lib/MapContainer';
 
 export default function Search() {
   
-
-//   const {isLoaded} = useLoadScript({ 
-//     googleMapsApiKey:'AIzaSyDRX0D21tjCpNmpABQp8bnfNyA99pscQrM'
-//   })
-
   const router = useRouter()
   const [userdata, setData] = useState<any>()
   const [load, setLoad] = useState<boolean>(false)
@@ -353,16 +349,9 @@ export default function Search() {
                                     </div>
                                 }
 
-                                {/* <div className='h-full w-full'>
-                                    {isLoaded ?  
-                                    <div>
-                                        is loading
-                                    </div> :
-                                    <div>
-                                        <GoogleMap zoom={10} center={{lat: 44, lng: -88}} mapContainerClassName="w-full h-full"></GoogleMap>
-                                    </div>
-                                    }
-                                </div> */}
+                                <div className='h-full w-full border-2 bg-red-100'>
+
+                                </div>
                             </div>
                         </div>
                     </div>
