@@ -18,8 +18,7 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
-import { TileLayer } from 'react-leaflet';
-import { MapContainer } from 'react-leaflet/lib/MapContainer';
+import { TileLayer, MapContainer, useMap, Marker, Popup } from 'react-leaflet';
 
 export default function Search() {
   
@@ -349,8 +348,18 @@ export default function Search() {
                                     </div>
                                 }
 
-                                <div className='h-full w-full border-2 bg-red-100'>
-
+                                <div className='h-full w-full'>
+                                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                                    <TileLayer
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    />
+                                    <Marker position={[51.505, -0.09]}>
+                                        <Popup>
+                                            A pretty CSS3 popup. <br /> Easily customizable.
+                                        </Popup>
+                                    </Marker>
+                                </MapContainer>
                                 </div>
                             </div>
                         </div>
