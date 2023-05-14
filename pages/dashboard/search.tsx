@@ -31,7 +31,7 @@ export default function Search() {
   const [load, setLoad] = useState<boolean>(false)
   const [displayMap, setDisplayMap] = useState<boolean>(false)
   const [org, setOrg] = useState<any>({});
-  const [center, setCenter] = useState<any>([50.879, 4.6997])
+  const [center, setCenter] = useState<any>([4.057083, 9.758146])
   const [zoom, setZoom] = useState(11)
 
   const {
