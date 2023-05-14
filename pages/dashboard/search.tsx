@@ -359,7 +359,7 @@ export default function Search() {
                                         A pretty CSS3 popup. <br /> Easily customizable.
                                         </Popup>
                                     </Marker>
-                                    </MapContainer>
+                                </MapContainer>
                                 </div>
                             </div>
                         </div>
