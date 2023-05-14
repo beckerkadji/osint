@@ -18,6 +18,7 @@ import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
 
+
 export default function Search() {
   
   const router = useRouter()
