@@ -236,12 +236,12 @@ export default function Search() {
                                                         <tr>
                                                             <th scope="col" className=" px-6 py-4">#</th>
                                                             <th scope="col" className=" px-6 py-4">Names</th>
+                                                            <th scope="col" className=" px-6 py-4">images</th>
                                                             <th scope="col" className=" px-6 py-4">Phones</th>
                                                             <th scope="col" className=" px-6 py-4">links</th>
                                                             <th scope="col" className=" px-6 py-4">Emails</th>
                                                             <th scope="col" className=" px-6 py-4">Usernames</th>
                                                             <th scope="col" className=" px-6 py-4">address</th>
-                                                            <th scope="col" className=" px-6 py-4">images</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -251,6 +251,11 @@ export default function Search() {
                                                                         <td className="whitespace-nowrap  px-6 py-4 font-medium">{key}</td>
                                                                         <td className="">{item.names?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
+                                                                        ))}</td>
+                                                                        <td className="whitespace-nowrap  px-6 flex  justify-between">{item.images?.map((item: any, key:any) => (
+                                                                            <p className="w-[6rem] h-[4rem] relative " key={key}>
+                                                                                <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill /></Link>
+                                                                            </p>
                                                                         ))}</td>
                                                                         <td className="">{item.phones?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
@@ -266,11 +271,6 @@ export default function Search() {
                                                                         <td className="">{item.usernames[0]}</td>
                                                                         <td className="">{item.addresses?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
-                                                                        ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 flex  justify-between">{item.images?.map((item: any, key:any) => (
-                                                                            <p className="w-[6rem] h-[4rem] relative " key={key}>
-                                                                                <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill /></Link>
-                                                                            </p>
                                                                         ))}</td>
                                                                     </tr>
                                                                 ))
