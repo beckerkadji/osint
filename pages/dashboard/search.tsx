@@ -1,13 +1,14 @@
 import Tree from 'react-d3-tree';
 import Link from "next/link";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
+import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlineMail, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
 import { toast } from "react-toastify";
 import React from 'react';
 import { useRouter } from "next/router";
 import { storage } from "../../app/utils/utils";
 import { useAuth } from "../../app/layouts/AuthLayout";
-import { HiUsers } from "react-icons/hi"
+import { HiUsers } from "react-icons/hi";
+import { CiLocationOn } from "react-icons/ci";
 import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
 import { useForm } from 'react-hook-form';
@@ -17,43 +18,29 @@ import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search } from '../../app/authApi/api';
 import { orgChat } from '../../app/utils/orgchat';
 import Image from 'next/image';
-
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 export default function Search() {
   
+  
+  const containerStyle = {
+    width: '400px',
+    height: '400px'
+  };
+  const center = {
+    lat: -3.745,
+    lng: -38.523
+  };
+  const { isLoaded } = useJsApiLoader({ 
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyAJycZ9cYaNfALflWDd_pA21LDf92Ej0n0'
+  })
+
   const router = useRouter()
   const [userdata, setData] = useState<any>()
   const [load, setLoad] = useState<boolean>(false)
   const [org, setOrg] = useState<any>({});
-  let exempleData: any = {
-    "data" : [
-        {
-            "id": "sdfdfsdfsdf",
-            "names": [
-                'becker','kadji'
-            ],
-            'phones':[
-                '696809088',
-                '672295778'
-            ],
-            'emails':[
-                'kadjibecker@gmail.com',
-                'beckerkn2000@gmail.com'
-            ],
-            'usernames':[
-                'becker123','kadjibecker'
-            ],
-            'social_medias': ['facebook'],
-            'addresses': ['douala, yaoundé'],
-            'geomaps': '2.45656, 5.45454',
-            'images': [
-                'http://localhost:3000/slide1.jpg',
-                'http://localhost:3000/slide3.jpg',
-            ],
-            'links': ['one link here']
-        }
-      ]
-  } 
+
 
   const {
     register,  
@@ -112,50 +99,6 @@ export default function Search() {
         // setOrg(orgData)
     }
   }
-
-    // const orgChart = {
-    //     name: 'becker@gmail.com',
-    //     children: [
-    //       {
-    //         name: 'Email type',
-    //         attributes: {
-    //           Emailtype: 'Professional email',
-    //         },
-    //         children: [
-    //           {
-    //             name: 'Facebook',
-    //             attributes: {
-    //               number: '0023769678890',
-    //               userAccount: 'beckerkadji',
-    //             }
-    //           },
-    //           {
-    //             name: 'Instagram',
-    //             attributes: {
-    //                 username: 'kadjibecker',
-    //                 userAccount: 'beckerkadji',
-    //             }
-    //           },
-    //           {
-    //             name: 'Location',
-    //             attributes: {
-    //                 Country: 'Cameroun',
-    //                 city: 'Yaounde',
-    //                 distric: 'Yaounde 3iem',
-    //             }
-    //           },
-    //           {
-    //             name: 'Recent Activity',
-    //             attributes: {
-    //                 username: 'kadjibecker',
-    //                 userAccount: 'beckerkadji',
-    //             }
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   };
-
     return  (
        <>
             <section className="h-screen relative ">
@@ -348,7 +291,14 @@ export default function Search() {
                                 }
 
                                 <div className='h-full w-full'>
-
+                                    {isLoaded ?  
+                                    <div>
+                                        is loading Map...
+                                    </div> :
+                                    <div>
+                                        {/* <GoogleMap zoom={10} center={{lat: 44, lng: -88}} mapContainerClassName="w-full h-full"></GoogleMap> */}
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>

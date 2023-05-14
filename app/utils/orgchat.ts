@@ -76,6 +76,78 @@ export const orgChat = (data: any, key:any) : any => {
         }
         return mySchema
     }
+    let exempleData: any = {
+        "data" : [
+            {
+                "id": "sdfdfsdfsdf",
+                "names": [
+                    'becker','kadji'
+                ],
+                'phones':[
+                    '696809088',
+                    '672295778'
+                ],
+                'emails':[
+                    'kadjibecker@gmail.com',
+                    'beckerkn2000@gmail.com'
+                ],
+                'usernames':[
+                    'becker123','kadjibecker'
+                ],
+                'social_medias': ['facebook'],
+                'addresses': ['douala, yaoundé'],
+                'geomaps': '2.45656, 5.45454',
+                'images': [
+                    'http://localhost:3000/slide1.jpg',
+                    'http://localhost:3000/slide3.jpg',
+                ],
+                'links': ['one link here']
+            }
+          ]
+      } 
+    // const orgChart = {
+    //     name: 'becker@gmail.com',
+    //     children: [
+    //       {
+    //         name: 'Email type',
+    //         attributes: {
+    //           Emailtype: 'Professional email',
+    //         },
+    //         children: [
+    //           {
+    //             name: 'Facebook',
+    //             attributes: {
+    //               number: '0023769678890',
+    //               userAccount: 'beckerkadji',
+    //             }
+    //           },
+    //           {
+    //             name: 'Instagram',
+    //             attributes: {
+    //                 username: 'kadjibecker',
+    //                 userAccount: 'beckerkadji',
+    //             }
+    //           },
+    //           {
+    //             name: 'Location',
+    //             attributes: {
+    //                 Country: 'Cameroun',
+    //                 city: 'Yaounde',
+    //                 distric: 'Yaounde 3iem',
+    //             }
+    //           },
+    //           {
+    //             name: 'Recent Activity',
+    //             attributes: {
+    //                 username: 'kadjibecker',
+    //                 userAccount: 'beckerkadji',
+    //             }
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   };
+
 //     let schema = {
 //     name: 'becker@gmail.com',
 //     children: [
