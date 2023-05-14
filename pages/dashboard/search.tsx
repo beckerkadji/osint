@@ -277,20 +277,6 @@ export default function Search() {
                                                             }
                                                     </tbody>
                                                     </table>
-                                                    {
-                                                        displayMap ?
-                                                        <div className='h-full w-full'>
-                                                            <div>
-                                                                <Map height={300} center={center} defaultZoom={11}>
-                                                                    <Marker width={50} anchor={center} />
-                                                                </Map>
-                                                            </div>
-                                                        </div> :
-                                                        <div>
-                                                            map here
-                                                        </div>
-                                                    }
-                
                                                 </div>
                                                 </div>
                                             </div>
@@ -298,6 +284,19 @@ export default function Search() {
                                     </div>
                                 }
                             </div>
+                            {
+                                displayMap ?
+                                <div className='h-full w-full'>
+                                    <div>
+                                        <Map height={300} center={center} defaultZoom={11}>
+                                            <Marker width={50} anchor={center} />
+                                        </Map>
+                                    </div>
+                                </div> :
+                                <div>
+                                    map here
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
