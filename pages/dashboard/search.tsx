@@ -1,14 +1,13 @@
 import Tree from 'react-d3-tree';
 import Link from "next/link";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlineMail, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
+import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
 import { toast } from "react-toastify";
 import React from 'react';
 import { useRouter } from "next/router";
 import { storage } from "../../app/utils/utils";
 import { useAuth } from "../../app/layouts/AuthLayout";
-import { HiUsers } from "react-icons/hi";
-import { CiLocationOn } from "react-icons/ci";
+import { HiUsers } from "react-icons/hi"
 import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
 import { useForm } from 'react-hook-form';
@@ -349,7 +348,7 @@ export default function Search() {
                                 }
 
                                 <div className='h-full w-full'>
-                                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+                                {/* <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
                                     <TileLayer
                                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -359,7 +358,7 @@ export default function Search() {
                                             A pretty CSS3 popup. <br /> Easily customizable.
                                         </Popup>
                                     </Marker>
-                                </MapContainer>
+                                </MapContainer> */}
                                 </div>
                             </div>
                         </div>
