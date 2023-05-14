@@ -28,6 +28,7 @@ export default function Users() {
     const router = useRouter()
     useEffect(()=>{
         if(localStorage.getItem('token') === "undefined" || localStorage.getItem('token') === null ){
+            localStorage.clear();
             router.push('/login')
           }
     }, [router])
