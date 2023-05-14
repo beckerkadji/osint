@@ -71,3 +71,5 @@ export const generatePassword = async (): Promise<string> => {
     }
     return result;
 }
+
+export const apiKey = <string>process.env.NEXT_PUBLIC_API_KEY;

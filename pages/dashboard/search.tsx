@@ -5,7 +5,7 @@ import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlineMail, AiOutl
 import { toast } from "react-toastify";
 import React from 'react';
 import { useRouter } from "next/router";
-import { storage } from "../../app/utils/utils";
+import { apiKey, storage } from "../../app/utils/utils";
 import { useAuth } from "../../app/layouts/AuthLayout";
 import { HiUsers } from "react-icons/hi";
 import { CiLocationOn } from "react-icons/ci";
@@ -22,7 +22,6 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 export default function Search() {
   
-  
   const containerStyle = {
     width: '400px',
     height: '400px'
@@ -33,7 +32,7 @@ export default function Search() {
   };
   const { isLoaded } = useJsApiLoader({ 
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyAJycZ9cYaNfALflWDd_pA21LDf92Ej0n0'
+    googleMapsApiKey: apiKey
   })
 
   const router = useRouter()
