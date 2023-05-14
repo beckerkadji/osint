@@ -89,7 +89,7 @@ export default function Dashboard() {
                                 <HiUsers className="text-xl" /><span className="pl-5">Manage users</span>
                             </Link>
                             <Link href={'/dashboard/search'}  className="h-12 w-full pl-4 text-left text-base block duration-300 hover:bg-gray-300 hover:text-gray-900 border-y-[1px] border-gray-700 flex items-center">
-                                <AiOutlineSearch className="text-xl" /><span className="pl-5">Email address</span>
+                                <AiOutlineSearch className="text-xl" /><span className="pl-5">Search</span>
                             </Link> 
                             <div className="h-[10%] absolute bottom-5 w-full flex justify-center items-center self-end ">
                                 <button
