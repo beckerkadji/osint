@@ -269,7 +269,7 @@ export default function Dashboard() {
                                             </div>
                                         ))
                                     ): (
-                                        <div>No active session</div>
+                                        <div>Loading sessions...</div>
                                     )
                                 }
                             </div>
