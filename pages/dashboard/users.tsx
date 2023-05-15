@@ -113,6 +113,11 @@ export default function Users() {
     const onDeleteUser = async (userid: any) => {
         if(confirm('Delete this user ?') == true){
             const res =  await mutateAsyncDeleteUser(userid)
+            if(res.data.code === "success"){
+                toast.success(res.data.message)
+            } else {
+                toast.error(res.data.message);
+            } 
         }   
     }
 
