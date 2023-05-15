@@ -286,7 +286,7 @@ export default function Search() {
                             </div>
                             {
                                 displayMap ?
-                                <div className='h-full w-full phone:-translate-y-[15em]'>
+                                <div className='h-full w-full phone:-translate-y-[15em] laptop:-translate-y-0'>
                                     <div>
                                         <Map height={300} center={center} defaultZoom={11}>
                                             <Marker width={50} anchor={center} />
