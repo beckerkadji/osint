@@ -73,6 +73,7 @@ export default function Search() {
   }
 
   const onSearch = async (data: any) => {
+    setDisplayMap(false)
     setLoad(true)
     let res: any = await search(data)
     if(res.data.data.length == 0){
