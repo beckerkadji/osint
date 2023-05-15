@@ -33,6 +33,7 @@ export default function Search() {
   const [org, setOrg] = useState<any>({});
   const [center, setCenter] = useState<any>([4.057083, 9.758146])
   const [zoom, setZoom] = useState(11)
+  const [link, setLink] = useState<any>()
 
   const {
     register,  
@@ -238,10 +239,10 @@ export default function Search() {
                                                             <th scope="col" className=" px-6 py-4">Names</th>
                                                             <th scope="col" className=" px-6 py-4">Usernames</th>
                                                             <th scope="col" className=" px-6 py-4">images</th>
+                                                            <th scope="col" className=" px-6 py-4">links</th>
+                                                            <th scope="col" className=" px-6 py-4">address</th>
                                                             <th scope="col" className=" px-6 py-4">Phones</th>
                                                             <th scope="col" className=" px-6 py-4">Emails</th>
-                                                            <th scope="col" className=" px-6 py-4">address</th>
-                                                            <th scope="col" className=" px-6 py-4">links</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -258,19 +259,24 @@ export default function Search() {
                                                                                 <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill /></Link>
                                                                             </p>
                                                                         ))}</td>
+                                                                        <td className="whitespace-nowrap">
+                                                                            <button 
+                                                                                type="button"
+                                                                                onClick={()=>setLink(item.links)}
+                                                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                                                className="active:shadow-lg transition duration-150 ease-in-out right-0 top-[-3rem] px-3 py-2 bg-blackcolor rounded-sm w-24 text-whitecolor flex justify-between items-center text-xs"
+                                                                            >
+                                                                                Voir les liens
+                                                                            </button>
+                                                                        </td>
+                                                                        <td className="">{item.addresses?.map((item: any, key:any) => (
+                                                                            <p key={key}>{item}</p>
+                                                                        ))}</td>
                                                                         <td className="">{item.phones?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
                                                                         <td className="">{item.emails?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
-                                                                        ))}</td>
-                                                                        <td className="">{item.addresses?.map((item: any, key:any) => (
-                                                                            <p key={key}>{item}</p>
-                                                                        ))}</td>
-                                                                        <td className="whitespace-nowrap  px-6 flex  justify-between">{item.links?.map((item: any, key:any) => (
-                                                                            <p className="" key={key}>
-                                                                                <Link href={item} target='_blank'>{item}</Link>
-                                                                            </p>
                                                                         ))}</td>
                                                                     </tr>
                                                                 ))
@@ -301,6 +307,33 @@ export default function Search() {
                     </div>
                 </div>
             </section>
+
+            <div className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+                id="staticBackdrop" tabIndex={2} data-bs-backdrop="none" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xs relative w-auto pointer-events-none">
+                    <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                        <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                            <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
+                                Liens associés à cette recherche
+                            </h5>
+                            <button type="button"
+                            className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body relative p-4">
+                            <div className='flex flex-col text-blue-600'>
+                                {link?.map((item: any, key:any) => (
+                                    <p className="" key={key}>
+                                        <Link href={item} target='_blank'>{item}</Link>
+                                    </p>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
        </> 
     )
 }
