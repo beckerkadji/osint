@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { AiFillDelete, AiFillEdit, AiOutlineSearch} from "react-icons/ai";
 import { useMutation, useQuery } from "react-query";
-import { deleteUser, getAllUser, updateUser} from "../../app/authApi/api";
+import { deleteUser, getAllUser, updatePermissions, updateUser} from "../../app/authApi/api";
 import React from 'react';
 import { FaUserPlus } from "react-icons/fa";
 import TableHeader from "../../app/components/Datatable/TableHeader";
@@ -17,7 +17,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
 import { useForm } from "react-hook-form";
-import UserType from "../../app/_types/User.type";
+import UserType, { PERMISSION } from "../../app/_types/User.type";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { createUserSchema, updatePasswordSchema, updateUserSchema } from "../../app/_validations/user.validation";
 
@@ -151,7 +151,18 @@ export default function Users() {
         handleSubmit: handleSubmitPermission
     } = useForm<UserType.givePermissionFields>()
 
+    const {isLoading: isUpdatePermissions, mutateAsync: mutateAsyncUpdatePermissions} = useMutation(async (data: any) =>{
+        const res =  await updatePermissions(data, token, user?.id)
+        return res
+    })
+
     const onPermissions = async (data:any) =>{
+        const res =  await mutateAsyncUpdatePermissions(data)
+        if(res.data.code === "success"){
+            toast.success(res.data.message)
+        } else {
+            toast.error(res.data.message);
+        } 
     }
     
 
@@ -292,7 +303,7 @@ export default function Users() {
                                     <table className="min-w-full rounded-lg overflow-y-scroll ">
                                     <TableHeader />
                                     <tbody>
-                                        {userData.isLoading ? <div>Loading...</div> : null}
+                                        {userData.isLoading ? <p>Loading...</p> : null}
                                         {
                                             userData.data ? 
                                             (
@@ -309,7 +320,7 @@ export default function Users() {
                                                             {user.role.name}
                                                         </td>
                                                         <td className="text-sm text-gray-900 font-light px-3 py-2 whitespace-nowrap">
-                                                            <div className="flex justify-around">
+                                                            <p className="flex justify-around">
                                                                 <button
                                                                     onClick={()=>setUser(user)}
                                                                     type="button"
@@ -321,12 +332,12 @@ export default function Users() {
                                                                     type="button">
                                                                     <AiFillDelete/>  
                                                                 </button>
-                                                            </div>
+                                                            </p>
                                                         </td>
                                                     </tr>
                                                 ))
                                             ):(
-                                                <div>Empty data</div>
+                                                <p>Empty data</p>
                                             )
                                         }
                                         
@@ -761,7 +772,9 @@ export default function Users() {
                                     </div>
                                 </button>
                             </div>
-                            <div ref={Permissions} className="flex w-full justify-center">
+                            <div ref={Permissions} className="flex w-full justify-center flex-col items-center">
+
+                                <hr className="w-full border-[1px] border-blackcolor mt-5"/>
                                 <div className="w-full p-4">
                                     <form className="" onSubmit={handleSubmitPermission(onPermissions)}>
                                         <div className="flex flex-col w-full text-sm justify-center items-center mt-4 mb-6">
@@ -769,85 +782,85 @@ export default function Users() {
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     READ USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' {...registerPermission('permissions')} value={PERMISSION.READ_USER} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     EDIT USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.EDIT_USER} {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around  w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     DELETE USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input  type='checkbox' value={PERMISSION.READ_USER}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3 text-gray-800" htmlFor="flexCheckChecked">
                                                     BLOCK USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.BLOCK_USER} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     INVITE USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.INVITE_USER}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     ADD PERMISSION
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.ADD_PERMISSION}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     REMOVE PERMISSION
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.REMOVE_PERMISSION} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     CHANGE ROLE
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input  type='checkbox' value={PERMISSION.CHANGE_ROLE}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     READ SESSION
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.READ_SESSION}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     LOGOUT SESSION
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.LOGOUT_SESSION} {...registerPermission('permissions')} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     ADD TARGET
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.ADD_TARGET} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     EDIT TARGET
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.EDIT_TARGET} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
-                                                    RENOVE TARGET
+                                                    REMOVE TARGET
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.REMOVE_TARGET} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     ADD SUP SEARCH
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input  type='checkbox' value={PERMISSION.READ_USER}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                         </div>
                                         <div
@@ -857,7 +870,7 @@ export default function Users() {
                                             data-bs-dismiss="modal">
                                             Close
                                             </button>
-                                            { isRegistering ?
+                                            { isUpdatePermissions ?
                                                 <button disabled type="button" className="inline-block px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
                                                     <svg aria-hidden="true" role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>

@@ -102,6 +102,17 @@ export const updateUser = async (data: UserType.updateFields, token:string, user
     )
 }
 
+export const updatePermissions = async (data: UserType.givePermissionFields, token:string, userid: string) =>{
+    return await axios.post(`${url}/permission/${userid}`, 
+    data,
+    {
+        headers:{
+            "Authorization" : token
+        }
+    }
+    )
+}
+
 export const updateUserPasswordCredential = async (data: LoginType.loginUserFields) =>{
     return await axios.post(`${url}/user/login_user`, data)
 }
