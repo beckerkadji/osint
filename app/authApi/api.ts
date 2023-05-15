@@ -9,7 +9,6 @@ const url = <string>process.env.NEXT_PUBLIC_AUTH_URL
 const Targeting = <string>process.env.NEXT_PUBLIC_TARGETING
 export const login = async (data: LoginType.loginFields)=>{
     let res: any = await axios.post(`${url}/login`, data)
-    console.log(res)
     return res
 }
 

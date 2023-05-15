@@ -57,7 +57,6 @@ export default function Users() {
 
     const userData = useQuery("userList", async () => {
         const response = await getAllUser(token)
-        console.log("response data:", response.data.data)
         return response.data.data
     })
         
