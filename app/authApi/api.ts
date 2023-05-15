@@ -5,9 +5,6 @@ import { storage } from '../utils/utils'
 import LoginType from '../_types/Login.type'
 import UserType from '../_types/User.type'
 
-// const url =  "http://localhost:8080/api"
-// const Targeting = 'http://localhost:3000/api'
-
 const url = <string>process.env.NEXT_PUBLIC_AUTH_URL
 const Targeting = <string>process.env.NEXT_PUBLIC_TARGETING
 export const login = async (data: LoginType.loginFields)=>{
@@ -69,6 +66,16 @@ export const getAllUser = async (token: string) => {
 
 export const getUser = async (token: string, userid: any) => {
     let res: any =  await axios.get(`${url}/user/${userid}`, 
+    {
+        headers:{
+            "Authorization": token
+        },
+    })
+    return res
+}
+
+export const deleteUser = async (token: string, userid: any) => {
+    let res: any =  await axios.delete(`${url}/user/${userid}`, 
     {
         headers:{
             "Authorization": token

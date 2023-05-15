@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { AiFillDelete, AiFillEdit, AiOutlineSearch} from "react-icons/ai";
 import { useMutation, useQuery } from "react-query";
-import { getAllUser, updateUser} from "../../app/authApi/api";
+import { deleteUser, getAllUser, updateUser} from "../../app/authApi/api";
 import React from 'react';
 import { FaUserPlus } from "react-icons/fa";
 import TableHeader from "../../app/components/Datatable/TableHeader";
@@ -102,11 +102,20 @@ export default function Users() {
 
 
     const {isLoading: isUpdateUser, mutateAsync: mutateAsyncUpdateUser} = useMutation(async (data: any) =>{
-        console.log("Send",data) 
         const res =  await updateUser(data, token, user?.id)
-        console.log(res)
         return res
     })
+
+    const {mutateAsync: mutateAsyncDeleteUser} = useMutation( async (userId: any) =>{
+        const res = await deleteUser(token, userId)
+        return res
+    })
+
+    const onDeleteUser = async (userid: any) => {
+        if(confirm('Delete this user ?') == true){
+            const res =  await mutateAsyncDeleteUser(userid)
+        }   
+    }
 
     const onUpdateUser = async (data : any)=> {
         const res = await mutateAsyncUpdateUser(data)
@@ -118,9 +127,7 @@ export default function Users() {
     }
 
     const {isLoading: isUpdatePassword, mutateAsync: mutateAsyncUpdatePassword} = useMutation(async (data: any) =>{
-        console.log("Send",data) 
         const res =  await updateUser(data, token, user?.id)
-        console.log(res)
         return res
     })
 
@@ -141,7 +148,6 @@ export default function Users() {
     } = useForm<UserType.givePermissionFields>()
 
     const onPermissions = async (data:any) =>{
-        console.log("Permissions", data)
     }
     
 
@@ -306,7 +312,11 @@ export default function Users() {
                                                                     data-bs-toggle="modal" data-bs-target="#updateModal">
                                                                     <AiFillEdit/>   
                                                                 </button>
-                                                                <AiFillDelete/>
+                                                                <button
+                                                                    onClick={()=>onDeleteUser(user.id)}
+                                                                    type="button">
+                                                                    <AiFillDelete/>  
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
