@@ -274,7 +274,10 @@ export default function Search() {
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
                                                                         <td className="">{item.phones?.map((item: any, key:any) => (
-                                                                            <p key={key}>{item}</p>
+                                                                            <p key={key}>
+                                                                                <p>phones :{item.id}</p>
+                                                                                {item.imeis.length > 0 && <p>Imeis :{item.imeis}</p>}
+                                                                            </p>
                                                                         ))}</td>
                                                                         <td className="">{item.emails?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
