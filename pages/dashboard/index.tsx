@@ -269,7 +269,7 @@ export default function Dashboard() {
                                             </div>
                                         ))
                                     ): (
-                                        <div>Loading sessions...</div>
+                                        <div className="text-center w-full">Loading sessions...</div>
                                     )
                                 }
                             </div>
