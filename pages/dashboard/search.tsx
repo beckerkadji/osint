@@ -83,6 +83,7 @@ export default function Search() {
             res = await search(data)
             setLoad(false)
             setData(res.data)
+            setDisplayMap(true)
             // let orgData = orgChat(userdata, data)
             // setOrg(orgData)
         }, 10000)
