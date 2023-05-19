@@ -606,14 +606,6 @@ export default function Users() {
                                     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
                                     placeholder={user?.email} defaultValue={user?.email} {...registerUpdateUser("email")}/>
                                 </div>
-                                {/* <div className="w-full">
-                                    <div className="datepicker relative form-floating mb-3 xl:w-96" data-mdb-toggle-button="false">
-                                        <input type="text"
-                                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blackcolor focus:outline-none"
-                                        data-mdb-toggle="datepicker" defaultValue={user?.blocked_at} {...registerUpdateUser("blocked_at")} />
-                                        <label htmlFor="floatingInput" className="text-gray-700">blocked at {user?.blocked_at}</label>
-                                    </div>
-                                </div> */}
                                 <div className="flex justify-center mt-4">
                                     <div className="w-full ">
                                         <p>actual role for this user is {user?.role.name}</p>
