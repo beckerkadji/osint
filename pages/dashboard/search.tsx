@@ -34,6 +34,7 @@ export default function Search() {
   const [center, setCenter] = useState<any>([4.057083, 9.758146])
   const [zoom, setZoom] = useState(11)
   const [link, setLink] = useState<any>()
+  const [moment, setMoment] = useState<any>();
 
   const {
     register,  
@@ -62,6 +63,13 @@ export default function Search() {
       // section.current.style.marginLeft ="0";
   }
 
+  const changeMap = (long: any, lat:any, moment: any) =>{
+    setDisplayMap(false)
+    setMoment(moment)
+    setCenter([long, lat])
+    setDisplayMap(true)
+  }
+
   const onLogout = async () => {
       const res = await logout(token)
       if (res.data.code === "success"){
@@ -83,14 +91,12 @@ export default function Search() {
             res = await search(data)
             setLoad(false)
             setData(res.data)
-            setDisplayMap(true)
             // let orgData = orgChat(userdata, data)
             // setOrg(orgData)
         }, 10000)
     }else{
         setData(res.data)
         setLoad(false)
-        setDisplayMap(true)
 
         // let orgData = orgChat(userdata, data)
         // setOrg(orgData)
@@ -251,33 +257,51 @@ export default function Search() {
                                                             {
                                                                 userdata?.data.map((item: any, key:number)=>(
                                                                     <tr className="border-b text-blackcolor" key={key}>
-                                                                        <td className="whitespace-nowrap  px-6 py-4 font-medium">{key}</td>
+                                                                        <td className="whitespace-nowrap bg-gray-100  px-6 py-4 font-medium">{key}</td>
                                                                         <td className="">{item.names?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
-                                                                        <td className="">{item.usernames[0]}</td>
+                                                                        <td className="bg-gray-100">{item.usernames && item.usernames[0]}</td>
                                                                         <td className="whitespace-nowrap  px-6 flex  justify-between">{item.images?.map((item: any, key:any) => (
                                                                             <p className="w-[6rem] h-[4rem] relative " key={key}>
                                                                                 <Link href={item} target='_blank'><Image src={item} alt="Logo"  fill /></Link>
                                                                             </p>
                                                                         ))}</td>
-                                                                        <td className="whitespace-nowrap">
-                                                                            <button 
-                                                                                type="button"
-                                                                                onClick={()=>setLink(item.links)}
-                                                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                                                                className="active:shadow-lg transition duration-150 ease-in-out right-0 top-[-3rem] px-3 py-2 bg-blackcolor rounded-sm w-24 text-whitecolor flex justify-between items-center text-xs"
-                                                                            >
-                                                                                Voir les liens
-                                                                            </button>
+                                                                        <td className="whitespace-nowrap bg-gray-100">
+                                                                            <p className='h-full flex justify-center'>
+                                                                                <button 
+                                                                                    type="button"
+                                                                                    onClick={()=>setLink(item.links)}
+                                                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                                                                    className="active:shadow-lg transition duration-150 ease-in-out right-0 top-[-3rem] px-3 py-2 bg-blackcolor rounded-sm w-24  text-gray-400 flex justify-between items-center text-xs"
+                                                                                >
+                                                                                    Voir les liens
+                                                                                </button>
+                                                                            </p>
                                                                         </td>
                                                                         <td className="">{item.addresses?.map((item: any, key:any) => (
                                                                             <p key={key}>{item}</p>
                                                                         ))}</td>
-                                                                        <td className="">{item.phones?.map((item: any, key:any) => (
-                                                                            <p key={key}>
+                                                                        <td className="bg-gray-100">{item.phones?.map((item: any, key:any) => (
+                                                                            <p key={key} className=''>
                                                                                 <p>phones :{item.id}</p>
-                                                                                {item.imeis.length > 0 && <p>Imeis :{item.imeis}</p>}
+                                                                                {item.imeis.length > 0 && <p>Imeis :{item.imeis.map((item: any, key:any) => (
+                                                                                    <p key={key}>
+                                                                                        {item.imei?.id}
+                                                                                        <p className='flex flex-col items-center'>Locations : {item.imei.locations.map((item:any, key: any)=> (
+                                                                                            <p key={key}>
+                                                                                                <button 
+                                                                                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
+                                                                                                    className="active:shadow-lg transition duration-150 ease-in-out right-0  px-3 py-2 bg-blackcolor rounded-sm m-2 text-gray-400 flex justify-between items-center text-xs"
+                                                                                                    onClick={()=> {
+                                                                                                        changeMap(item.long, item.lat, item.moment)
+                                                                                                        }
+                                                                                                    }>
+                                                                                                    {item.moment}
+                                                                                                </button></p>
+                                                                                        ))}</p>
+                                                                                    </p>
+                                                                                ))}</p>}
                                                                             </p>
                                                                         ))}</td>
                                                                         <td className="">{item.emails?.map((item: any, key:any) => (
@@ -295,7 +319,7 @@ export default function Search() {
                                     </div>
                                 }
                             </div>
-                            {
+                            {/* {
                                 displayMap ?
                                 <div className='h-full w-full phone:-translate-y-[15em] laptop:-translate-y-0'>
                                     <div>
@@ -307,7 +331,7 @@ export default function Search() {
                                 <div>
                                     map here
                                 </div>
-                            }
+                            } */}
                         </div>
                     </div>
                 </div>
@@ -339,6 +363,36 @@ export default function Search() {
                     </div>
                 </div>
             </div>
+
+            <div className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+                id="staticBackdrop2" tabIndex={2} data-bs-backdrop="none" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl relative w-auto pointer-events-none ">
+                    <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-blackcolor bg-clip-padding rounded-md outline-none text-current">
+                        <div className="modal-header flex flex-shrink-0  items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                            <h5 className="text-xl font-medium leading-normal uppercase text-whitecolor" id="exampleModalScrollableLabel">
+                                Map position for : {moment}
+                            </h5>
+                            <button type="button"
+                            className="btn-close box-content w-5 h-5 p-1 text-whitecolor border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body relative p-4">
+                            <div className='flex flex-col justify-center text-gray-300 transition ease-in-out'>
+                                <div className='h-full w-full phone:-translate-y-[15em] laptop:-translate-y-0'>
+                                    <div>
+                                        <Map height={450} center={center} defaultZoom={11}>
+                                            <Marker width={50} anchor={center} />
+                                        </Map>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
        </> 
     )
 }

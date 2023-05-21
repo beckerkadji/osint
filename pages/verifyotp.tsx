@@ -62,13 +62,11 @@ function VerifyOtp(){
     })
 
     const onLoginVerifyOtp = async (data : any) =>{
-        console.log(data)
         await mutateAsyncLoginVerify(data)
     }
     
     const {isLoading: isresentOtpLogin, mutateAsync: mutateAsyncLoginResentOpt} = useMutation(async (data: any) =>{
         const res =  await loginResendOtp({username})
-        console.log(res)
         setDesabled(true)
 
         return res
