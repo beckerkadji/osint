@@ -371,7 +371,7 @@ export default function Search() {
                                                                     <td>{key}</td>
                                                                     <td>{item.network}</td>
                                                                     <td>{item.type}</td>
-                                                                    <td> <Link href={item.url} target='_blank' className="hover:text-gray-600">{item.url}</Link></td>
+                                                                    <td> {item.url && <Link href={item.url} target='_blank' className="hover:text-gray-600">{item.url}</Link>}</td>
                                                                     <td>{item.text}</td>
                                                                     <td></td>
                                                                     <td></td>
