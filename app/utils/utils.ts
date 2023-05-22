@@ -73,3 +73,7 @@ export const generatePassword = async (): Promise<string> => {
 }
 
 export const apiKey: string = <string>process.env.NEXT_PUBLIC_API_KEY;
+
+export const usernameCheck = new RegExp('^[a-zA-Z0-9]')
+
+export const phoneCheck = new RegExp('^[0-9]')

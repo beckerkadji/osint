@@ -7,6 +7,7 @@ import UserType from '../_types/User.type'
 
 const url = <string>process.env.NEXT_PUBLIC_AUTH_URL
 const Targeting = <string>process.env.NEXT_PUBLIC_TARGETING
+const UserNameService = <string>process.env.NEXT_PUBLIC_USERNAME
 export const login = async (data: LoginType.loginFields)=>{
     let res: any = await axios.post(`${url}/login`, data)
     return res
@@ -119,6 +120,12 @@ export const updateUserPasswordCredential = async (data: LoginType.loginUserFiel
 
 export const search = async (data: UserType.searchFields) =>{
     return await axios.post(`${Targeting}/target/find`, data)
+}
+
+export const searchUsername = async (data: UserType.searchFields) =>{
+    return await axios.get(
+        `${UserNameService}/search/${data.key}`
+    )
 }
 
 export const createSearch = async (data: UserType.searchFields) =>{

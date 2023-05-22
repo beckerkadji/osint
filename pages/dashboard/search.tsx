@@ -1,6 +1,6 @@
 import Tree from 'react-d3-tree';
 import Link from "next/link";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
 import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlineMail, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
 import { toast } from "react-toastify";
 import React from 'react';
@@ -15,27 +15,36 @@ import { useForm } from 'react-hook-form';
 import UserType from '../../app/_types/User.type';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { searchSchema } from '../../app/_validations/user.validation';
-import { createSearch, search } from '../../app/authApi/api';
-import { orgChat } from '../../app/utils/orgchat';
+import { createSearch, search, searchUsername } from '../../app/authApi/api';
 import Image from 'next/image';
 import {  GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Map, Marker } from "pigeon-maps"
-
+import { data } from 'autoprefixer';
+import { phoneCheck, usernameCheck } from '../../app/utils/utils';
 
 
 export default function Search() {
 
+  const phoneDiv = useRef() as MutableRefObject<HTMLDivElement>
+  const usernameDiv = useRef() as MutableRefObject<HTMLDivElement>
   
   const router = useRouter()
   const [userdata, setData] = useState<any>()
+  const [usernameData, setUsernameData] = useState<any>()
+  const [loadUsername, setLoadUsername] = useState<boolean>(false)
   const [load, setLoad] = useState<boolean>(false)
   const [displayMap, setDisplayMap] = useState<boolean>(false)
-  const [org, setOrg] = useState<any>({});
   const [center, setCenter] = useState<any>([4.057083, 9.758146])
   const [zoom, setZoom] = useState(11)
   const [link, setLink] = useState<any>()
   const [moment, setMoment] = useState<any>();
+  const [field, setField] = useState<any>();
 
+  useEffect( ()=> {
+    phoneDiv.current.classList.add('hidden')
+    usernameDiv.current.classList.add('hidden')
+  }, [router])
+  
   const {
     register,  
     formState:{ errors },
@@ -81,25 +90,37 @@ export default function Search() {
   }
 
   const onSearch = async (data: any) => {
-    setDisplayMap(false)
-    setLoad(true)
-    let res: any = await search(data)
-    if(res.data.data.length == 0){
-        let res: any = await createSearch(data) 
-        
-        setTimeout( async()=>{
-            res = await search(data)
-            setLoad(false)
-            setData(res.data)
-            // let orgData = orgChat(userdata, data)
-            // setOrg(orgData)
-        }, 10000)
+    if(!phoneCheck.test(data.key)){
+        setDisplayMap(false)
+        setLoadUsername(true)
+        if(!phoneDiv.current?.classList.contains('hidden')){
+            phoneDiv.current?.classList.add('hidden')
+        }
+        usernameDiv.current?.classList.remove('hidden')
+        let res: any = await searchUsername(data)
+        setLoadUsername(false)
+        setUsernameData(res.data)
+        console.log('username data is', usernameData)
     }else{
-        setData(res.data)
-        setLoad(false)
-
-        // let orgData = orgChat(userdata, data)
-        // setOrg(orgData)
+        setDisplayMap(false)
+        setLoad(true)
+        if(!usernameDiv.current?.classList.contains('hidden')){
+            usernameDiv.current?.classList.add('hidden')
+        }
+        phoneDiv.current?.classList.remove('hidden')
+        let res: any = await search(data)
+        if(res.data.data.length == 0){
+            let res: any = await createSearch(data) 
+            
+            setTimeout( async()=>{
+                res = await search(data)
+                setLoad(false)
+                setData(res.data)
+            }, 10000)
+        }else{
+            setData(res.data)
+            setLoad(false)
+        }
     }
   }
     return  (
@@ -231,10 +252,7 @@ export default function Search() {
                                             >Loading...</span>
                                         </div>
                                     </div> : 
-                                    // <div  className='w-full h-full'>
-                                    //     <Tree data={org} />             
-                                    // </div>  
-                                    <div>
+                                    <div ref={phoneDiv}>
                                         <div className="flex flex-col">
                                             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                                 <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -318,20 +336,59 @@ export default function Search() {
                                         </div>
                                     </div>
                                 }
-                            </div>
-                            {/* {
-                                displayMap ?
-                                <div className='h-full w-full phone:-translate-y-[15em] laptop:-translate-y-0'>
-                                    <div>
-                                        <Map height={300} center={center} defaultZoom={11}>
-                                            <Marker width={50} anchor={center} />
-                                        </Map>
+
+                                {loadUsername ? 
+                                    <div className='text-white bg-opacity-10 bg-gray-900 text-blackcolor laptop:rounded-lg flex justify-center items-center w-full h-full'>
+                                        <div
+                                            className="inline-block h-20 w-20 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                            role="status">
+                                            <span  className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                                            >Loading...</span>
+                                        </div>
+                                    </div> :
+                                    <div ref={usernameDiv} className='relative'>
+                                        <div className="flex flex-col">
+                                            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                                <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8 absolute top-[80px]">
+                                                <div className="overflow-hidden">
+                                                    <table className="min-w-full overflow-x-auto text-center text-sm font-light">
+                                                    <thead
+                                                        className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
+                                                        <tr>
+                                                            <th scope="col" className=" px-6 py-4">#</th>
+                                                            <th scope="col" className=" px-6 py-4">Network</th>
+                                                            <th scope="col" className=" px-6 py-4">type</th>
+                                                            <th scope="col" className=" px-6 py-4">url</th>
+                                                            <th scope="col" className=" px-6 py-4">description</th>
+                                                            <th scope="col" className=" px-6 py-4">images</th>
+                                                            <th scope="col" className=" px-6 py-4">date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            usernameData?.data?.posts?.map((item:any, key:any) => (
+                                                                <tr className="border-b text-blackcolor p-2 h-10" key={key}>
+                                                                    <td>{key}</td>
+                                                                    <td>{item.network}</td>
+                                                                    <td>{item.type}</td>
+                                                                    <td> <Link href={item.url} target='_blank' className="hover:text-gray-600">{item.url}</Link></td>
+                                                                    <td>{item.text}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            ))
+                                                        }
+                                                    </tbody>
+                                                    </table>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div> :
-                                <div>
-                                    map here
-                                </div>
-                            } */}
+                                }
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
