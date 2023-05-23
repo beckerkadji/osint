@@ -75,7 +75,7 @@ export default function Search() {
   const changeMap = (long: any, lat:any, moment: any) =>{
     setDisplayMap(false)
     setMoment(moment)
-    setCenter([long, lat])
+    setCenter([lat, long])
     setDisplayMap(true)
   }
 
@@ -100,7 +100,6 @@ export default function Search() {
         let res: any = await searchUsername(data)
         setLoadUsername(false)
         setUsernameData(res.data)
-        console.log('username data is', usernameData)
     }else{
         setDisplayMap(false)
         setLoad(true)
