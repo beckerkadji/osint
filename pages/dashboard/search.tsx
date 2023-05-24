@@ -367,7 +367,7 @@ export default function Search() {
                                                         {
                                                             usernameData?.data?.posts?.map((item:any, key:any) => (
                                                                 <tr className="border-b text-blackcolor p-2 h-10" key={key}>
-                                                                    <td>{key}</td>
+                                                                    <td>{key+1}</td>
                                                                     <td>{item.network}</td>
                                                                     <td>{item.type}</td>
                                                                     <td> {item.url && <Link href={item.url} target='_blank' className="hover:text-gray-600">{item.url}</Link>}</td>
