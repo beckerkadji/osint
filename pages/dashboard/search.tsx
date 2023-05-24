@@ -172,7 +172,7 @@ export default function Search() {
                         </div>
                     </div>
 
-                    <div className="index h-[13%] phone:w-full flex items-center justify-between desktop:w-[80%] desktop:fixed z-100 desktop:right-0 bg-white">
+                    <div className="index h-[13%] phone:w-full flex items-center justify-between desktop:w-[80%] desktop:fixed z-100 desktop:right-0 bg-white border-[1px] border-gray-100">
                         <div className="phone:hidden laptop:block ml-4 w-[15%] text-center text-xl font-bold">
                             Dashboard
                         </div>
