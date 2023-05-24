@@ -24,6 +24,3 @@ body {
 #mySideNav{
     z-index: 200 !important;
 }
-.search{
-    z-index: 50 !important;
-}
