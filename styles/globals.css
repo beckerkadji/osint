@@ -17,3 +17,10 @@ body {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+.index{
+    z-index: 100 !important;
+}
+#mySideNav{
+    z-index: 200 !important;
+}

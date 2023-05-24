@@ -147,7 +147,7 @@ export default function Search() {
                                 </button>
                             </div>
                         </div>
-                    <div className="h-full w-[20%] phone:hidden laptop:block ">
+                    <div className="nav-hidden h-full w-[20%] phone:hidden laptop:block desktop:fixed">
                         <div className="phone:hidden laptop:relative laptop:block h-full flex flex-col justify-between border-r-2 border-thirdcolor">
                             <div className="h-[13%] w-full flex justify-center items-center">
                                 <span className="flex justify-center  items-center w-24 h-14">
@@ -172,7 +172,7 @@ export default function Search() {
                         </div>
                     </div>
 
-                    <div className="h-[13%] phone:w-full flex items-center justify-between">
+                    <div className="index h-[13%] phone:w-full flex items-center justify-between desktop:w-[80%] desktop:fixed z-100 desktop:right-0 bg-gray-100">
                         <div className="phone:hidden laptop:block ml-4 w-[15%] text-center text-xl font-bold">
                             Dashboard
                         </div>
@@ -205,7 +205,7 @@ export default function Search() {
                                     </div>
                                 </button>
                                 <ul
-                                    className="dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
+                                    className="index dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
                                     aria-labelledby="dropdownMenuButton1"
                                 >
                                     <li>
@@ -228,7 +228,7 @@ export default function Search() {
                     </div>
                 </section>
                 {/* end header*/}
-                <div className="absolute phone:left-0 laptop:left-auto laptop:right-0 top-[15%] laptop:w-[83%] phone:w-full phone:h-screen w-[80%] z-0 left-[18%]  text-gray-300 text-xs phone:flex-col tablet:h-[90%] laptop:flex laptop:flex-row justify-end">
+                <div className="absolute desktop:w-[80%] phone:left-0 laptop:left-auto laptop:right-0 top-[15%] laptop:w-[83%] phone:w-full phone:h-screen w-[80%] z-0 left-[18%]  text-gray-300 text-xs phone:flex-col tablet:h-[90%] laptop:flex laptop:flex-row justify-end">
                     <div className="flex justify-end w-full laptop:w-full">
                         <div className="mb-3 w-full flex  flex-col  laptop:rounded-lg laptop:mx-2 text-white phone:justify-center phone:items-center tablet:justify-end items-end">
                             <div className='w-full flex justify-center'>
