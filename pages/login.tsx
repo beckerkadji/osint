@@ -11,6 +11,7 @@ import Link from "next/link"
 import { useAuth } from "../app/layouts/AuthLayout"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
+import { storage } from "../app/utils/utils"
 
 
 function Login(){
@@ -19,7 +20,9 @@ function Login(){
     useEffect(()=>{
         if( localStorage.getItem('token') !== null &&  localStorage.getItem('token') !== 'undefined' ){
             router.push('/dashboard')
-          }
+        }else{
+            storage.clearData();
+        }
     }, [router])
 
     const [isPassword, setIsPassword] = useState(false)
