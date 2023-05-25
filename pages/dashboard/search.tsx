@@ -228,7 +228,7 @@ export default function Search() {
                     </div>
                 </section>
                 {/* end header*/}
-                <div className="search absolute phone:overflow-auto laptop:overflow-x-auto desktop:w-[80%] phone:left-0 laptop:left-auto laptop:right-0 top-[15%] laptop:w-[83%] phone:w-full phone:h-screen w-[80%] z-0 left-[18%]  text-gray-300 text-xs phone:flex-col tablet:h-[90%] laptop:flex laptop:z-0 laptop:flex-row justify-end">
+                <div className="search absolute phone:overflow-auto laptop:overflow-scroll desktop:w-[80%] phone:left-0 laptop:left-auto laptop:right-0 top-[15%] laptop:w-[83%] phone:w-full phone:h-screen w-[80%] z-0 left-[18%]  text-gray-300 text-xs phone:flex-col tablet:h-[90%] laptop:flex laptop:z-0 laptop:flex-row justify-end">
                     <div className="flex justify-end w-full laptop:w-full">
                         <div className="relative mb-0 w-full flex  flex-col  laptop:rounded-lg laptop:mx-2 text-white phone:justify-center phone:items-center tablet:justify-end items-end">
                             <div className='w-full flex justify-center mb-4'>

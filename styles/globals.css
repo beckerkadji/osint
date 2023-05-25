@@ -24,3 +24,7 @@ body {
 #mySideNav{
     z-index: 200 !important;
 }
+
+.search{
+    overflow-x: scroll !important;
+}
