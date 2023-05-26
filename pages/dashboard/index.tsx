@@ -58,6 +58,11 @@ export default function Dashboard() {
 
     const result = useQuery("sessionList", async () => {
         const response = await getSession(token)
+        console.log(response.data.message)
+        if(response.data.message === 'NOT AUTHORIZED'){
+            storage.clearData()
+            router.push('/login')
+        }
         return response.data
     })
     
@@ -231,10 +236,10 @@ export default function Dashboard() {
                             </div>
                             <div className="w-full phone:h-[70%] phone:pt-5  tablet:pt-0 phone:flex phone:flex-col laptop:h-[70%] overflow-y-auto text-blackcolor">
                                 {
-                                    result.data ? 
+                                    result.data  ? 
                                     ( 
                                         result.data.data?.map((session: any, key:any) => (
-                                            <div className="w-full flex phone:justify-between laptop:justify-around items-center laptop:px-0 phone:px-4 mb-6" key={session.user.id} >
+                                            <div className="w-full flex phone:justify-between laptop:justify-around items-center laptop:px-0 phone:px-4 mb-6" key={session.user?.id} >
                                                 <button 
                                                     type='button'
                                                     className="dropdown-toggle transition duration-300 ease-in-out whitespace-nowrap flex h-full justify-center items-center">     
@@ -243,8 +248,8 @@ export default function Dashboard() {
                                                         <span className="absolute bottom-0 right-1 h-2 w-2 rounded-full bg-green-400"></span>
                                                     </span>
                                                     <div className="laptop:flex flex-col laptop:p-2 phone:px-4 justify-center items-start h-8">
-                                                        <span className="text-[12px] font-bold mt-2"><span className="flex items-center">{session.user.username}</span></span>
-                                                        <span className="text-xs -translate-y-1 text-gray-700">{session.user.firstname}</span>
+                                                        <span className="text-[12px] font-bold mt-2"><span className="flex items-center">{session.user?.username}</span></span>
+                                                        <span className="text-xs -translate-y-1 text-gray-700">{session.user?.firstname}</span>
                                                     </div>
                                                 </button>
                                                 <div className="dropup  relative">

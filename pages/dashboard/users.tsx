@@ -58,6 +58,10 @@ export default function Users() {
 
     const userData = useQuery("userList", async () => {
         const response = await getAllUser(token)
+        if(response.data.message === 'NOT AUTHORIZED'){
+            storage.clearData()
+            router.push('/login')
+        }
         return response.data.data
     })
         
