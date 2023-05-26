@@ -34,6 +34,7 @@ export default function Dashboard() {
     const onLogout = async () => {
         const res = await logout(token)
         if (res.data.code === "success"){
+            storage.removeToken()
             storage.clearData()
             router.push('/login')
         }else{
@@ -46,7 +47,8 @@ export default function Dashboard() {
     let tokenU = localStorage.getItem('token') ;
     useEffect(()=>{
         if(localStorage.getItem('token') === "undefined" || localStorage.getItem('token') === null ){
-            storage.clearData();
+            storage.removeToken()
+            storage.clearData()
             router.push('/login')
           }
     }, [tokenU, router])

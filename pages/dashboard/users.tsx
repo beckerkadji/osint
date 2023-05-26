@@ -28,7 +28,8 @@ export default function Users() {
     const router = useRouter()
     useEffect(()=>{
         if(localStorage.getItem('token') === "undefined" || localStorage.getItem('token') === null ){
-            localStorage.clear();
+            storage.removeToken()
+            storage.clearData()
             router.push('/login')
           }
     }, [router])
@@ -77,6 +78,7 @@ export default function Users() {
     const onLogout = async () => {
         const res = await logout(token)
         if (res.data.code === "success"){
+            storage.removeToken()
             storage.clearData()
             router.push('/login')
         }else{

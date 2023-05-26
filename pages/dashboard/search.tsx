@@ -54,6 +54,8 @@ export default function Search() {
   const token: any = localStorage.getItem('token')
   useEffect(()=>{
       if(localStorage.getItem('token') === "undefined" || localStorage.getItem('token') === null ){
+          storage.removeToken()
+          storage.clearData()
           router.push('/login')
         }
   }, [router])
@@ -82,6 +84,7 @@ export default function Search() {
   const onLogout = async () => {
       const res = await logout(token)
       if (res.data.code === "success"){
+          storage.removeToken()
           storage.clearData()
           router.push('/login')
       }else{

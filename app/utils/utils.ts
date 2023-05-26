@@ -59,6 +59,7 @@ export const storage = {
     },
     clearToken: () => window.localStorage.removeItem('token'),
     clearData: () => localStorage.clear(),
+    removeToken: () => localStorage.removeItem('token')
 };
 
 export const generatePassword = async (): Promise<string> => {
