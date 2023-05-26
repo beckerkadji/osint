@@ -25,6 +25,8 @@ function Login(){
         }
     }, [router])
 
+    console.log('token', localStorage.getItem('token'))
+
     const [isPassword, setIsPassword] = useState(false)
     const [visible, setVisible] = useState(false)
     const inputPassword = useRef() as MutableRefObject<HTMLInputElement>

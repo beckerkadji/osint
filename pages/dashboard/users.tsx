@@ -192,7 +192,7 @@ export default function Users() {
                                 </button>
                             </div>
                         </div>
-                    <div className="h-full w-[20%] phone:hidden laptop:block ">
+                    <div className="index h-full w-[20%] phone:hidden laptop:block desktop:fixed bg-white">
                         <div className="phone:hidden laptop:relative laptop:block h-full flex flex-col justify-between border-r-2 border-thirdcolor">
                             <div className="h-[13%] w-full flex justify-center items-center">
                                 <span className="flex justify-center  items-center w-24 h-14">
@@ -217,7 +217,7 @@ export default function Users() {
                         </div>
                     </div>
 
-                    <div className="h-[13%] phone:w-full flex items-center justify-between">
+                    <div className="index h-[13%] phone:w-full flex items-center justify-between desktop:w-[80%] fixed z-100 desktop:right-0 bg-white border-[1px] border-gray-100">
                         <div className="phone:hidden laptop:block ml-4 w-[15%] text-center text-xl font-bold">
                             Dashboard
                         </div>
@@ -250,7 +250,7 @@ export default function Users() {
                                     </div>
                                 </button>
                                 <ul
-                                    className="dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
+                                    className="index dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
                                     aria-labelledby="dropdownMenuButton1"
                                 >
                                     <li>

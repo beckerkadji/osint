@@ -90,7 +90,7 @@ export default function Dashboard() {
                             </Link>
                             <Link href={'/dashboard/search'}  className="h-12 w-full pl-4 text-left text-base block duration-300 hover:bg-gray-300 hover:text-gray-900 border-y-[1px] border-gray-700 flex items-center">
                                 <AiOutlineSearch className="text-xl" /><span className="pl-5">Search</span>
-                            </Link> 
+                            </Link>  
                             <div className="h-[10%] absolute bottom-5 w-full flex justify-center items-center self-end ">
                                 <button
                                 onClick={onLogout}
@@ -98,9 +98,9 @@ export default function Dashboard() {
                                     <AiOutlineLogout />
                                     <span className="ml-2 text-xs cursor-pointer">Log out</span>
                                 </button>
-                            </div> 
+                            </div>
                         </div>
-                    <div className="h-full w-[20%] phone:hidden laptop:block ">
+                    <div className="index h-full w-[20%] phone:hidden laptop:block desktop:fixed bg-white">
                         <div className="phone:hidden laptop:relative laptop:block h-full flex flex-col justify-between border-r-2 border-thirdcolor">
                             <div className="h-[13%] w-full flex justify-center items-center">
                                 <span className="flex justify-center  items-center w-24 h-14">
@@ -125,7 +125,7 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="h-[13%] phone:w-full flex items-center justify-between">
+                    <div className="index h-[13%] phone:w-full flex items-center justify-between desktop:w-[80%] fixed z-100 desktop:right-0 bg-white border-[1px] border-gray-100">
                         <div className="phone:hidden laptop:block ml-4 w-[15%] text-center text-xl font-bold">
                             Dashboard
                         </div>
@@ -158,7 +158,7 @@ export default function Dashboard() {
                                     </div>
                                 </button>
                                 <ul
-                                    className="dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
+                                    className="index dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
                                     aria-labelledby="dropdownMenuButton1"
                                 >
                                     <li>
@@ -182,7 +182,7 @@ export default function Dashboard() {
                 </section>
                 {/* end header*/}
 
-                <div  ref={main} className="pt-8 w-full absolute top-[10%] laptop:w-[80%] z-0 laptop:left-[18%]  text-gray-300 text-xs phone:flex-col h-full laptop:h-[90%] laptop:flex laptop:flex-row justify-around items-center">
+                <div  ref={main} className="pt-8 w-full ml-4 absolute top-[10%] laptop:w-[80%] z-0 laptop:left-[18%]  text-gray-300 text-xs phone:flex-col h-full laptop:h-[90%] laptop:flex laptop:flex-row justify-around items-center">
                         <div className="laptop:w-[60%] phone:w-full flex flex-col laptop:justify-between h-full">
                             <div className="phone:h-24 smalltablet:h-28 tablet:h-40 phone:my-8 laptop:my-0 w-full laptop:h-[25%] flex justify-between ">
                                 <div  className="w-[30%]  relative h-full bg-thirdcolor rounded-lg flex justify-center items-center">
