@@ -77,9 +77,11 @@ function Login(){
         <section className="w-full h-[100vh] flex bg-thirdcolor">
             <div className="h-full phone:w-full  flex flex-col">
                 <div className="w-full h-1/6 flex items-center">
-                    <span className="large:w-1/5 phone:w-26 phone:h-[50%] w-24 h-2/3 ml-6 relative">
-                        <Image src="/logo.png" alt="Logo" fill sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"/>
+                    <Link href={'/'}>
+                    <span className="large:w-1/5 phone:w-26 phone:h-[50%] w-36 h-2/3 ml-6 relative font-bold text-xl">
+                       OSINT-GN {/* <Image src="/logo.png" alt="Logo" fill sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"/> */}
                     </span>
+                    </Link>
                 </div>
                 <div className="h-full w-full flex justify-center flex phone:mt-12 laptop:mt-1 justify-center items-start large:text-4xl">
                     <form onSubmit={handleSubmit(onLogin)} className="large:w-[800px]  bg-whitecolor desktop:border-none tablet:pb-5 phone:flex phone:flex-col tablet:h-[55%] phone:h-[65%] laptop:h-[85%]  phone:justify-between  large:justify-between w-[400px] h-[450px]  flex flex-col  pt-6">
