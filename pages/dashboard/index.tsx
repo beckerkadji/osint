@@ -215,7 +215,7 @@ export default function Dashboard() {
                                             0{/* { usernameStat.data ? `${usernameStat.data.data.total}` : 'loading...' } */}
                                         </span>
                                         <span className="absolute tablet:block phone:hidden top-3 right-3 text-red-400 text-xs">
-                                            { usernameStat.data ? `${0}` : 'loading...' } faild <br/>
+                                            0 faild <br/>
                                              <span className="text-amber-500">0 pending</span> <br />
                                              <span className="text-lime-500">0 success</span> <br />
                                          </span>
@@ -229,12 +229,12 @@ export default function Dashboard() {
                                         </span>
                                         <hr className="border-4 font-bold border-slate-200 h-2 my-2 w-1/2"/>
                                         <span className="font-bold phone:text-xl tablet:text-3xl laptop:text-4xl text-blackcolor">
-                                            { phoneStat.data ? `${phoneStat.data.data.total}` : 'loading...' }
+                                            { phoneStat.data ? `${phoneStat.data.data.total}` : '...' }
                                         </span>
                                         <span className="absolute tablet:block phone:hidden top-3 right-3 text-red-400 text-xs">
-                                            { phoneStat.data ? `${phoneStat.data.data.failed}` : 'loading...' } faild <br/>
-                                             <span className="text-amber-500">{ phoneStat.data ? `${phoneStat.data.data.pending}` : 'loading...' } pending</span> <br />
-                                             <span className="text-lime-500">{ phoneStat.data ? `${phoneStat.data.data.success}` : 'loading...' } success</span> <br />
+                                            { phoneStat.data ? `${phoneStat.data.data.failed}` : '...' } faild <br/>
+                                             <span className="text-amber-500">{ phoneStat.data ? `${phoneStat.data.data.pending}` : '...' } pending</span> <br />
+                                             <span className="text-lime-500">{ phoneStat.data ? `${phoneStat.data.data.success}` : '...' } success</span> <br />
                                          </span>
                                         <Link href="#"><span className="text-gray-500  block text-xl absolute bottom-1 right-1 flex items-center"><span className="text-xs mx-2 tablet:block phone:hidden ">see more</span><BsArrowRightCircle /></span></Link>
                                     </div>
@@ -246,12 +246,12 @@ export default function Dashboard() {
                                         </span>
                                         <hr className="border-4 font-bold border-indigo-200 h-2 my-2 w-1/2"/>
                                         <span className="font-bold phone:text-xl tablet:text-3xl laptop:text-4xl text-blackcolor">
-                                            { usernameStat.data ? `${usernameStat.data.data.total}` : 'loading...' }
+                                            { usernameStat.data ? `${usernameStat.data.data.total}` : '...' }
                                         </span>
                                         <span className="absolute tablet:block phone:hidden top-3 right-3 text-red-400 text-xs">
-                                            { usernameStat.data ? `${usernameStat.data.data.failed}` : 'loading...' } faild <br/>
-                                             <span className="text-amber-500">{ usernameStat.data ? `${usernameStat.data.data.pending}` : 'loading...' } pending</span> <br />
-                                             <span className="text-lime-500">{ usernameStat.data ? `${usernameStat.data.data.success}` : 'loading...' } success</span> <br />
+                                            { usernameStat.data ? `${usernameStat.data.data.failed}` : '...' } faild <br/>
+                                             <span className="text-amber-500">{ usernameStat.data ? `${usernameStat.data.data.pending}` : '...' } pending</span> <br />
+                                             <span className="text-lime-500">{ usernameStat.data ? `${usernameStat.data.data.success}` : '...' } success</span> <br />
                                          </span>
                                         <Link href="#"><span className="text-gray-500  block text-xl absolute bottom-1 right-1 flex items-center"><span className="text-xs mx-2 tablet:block phone:hidden ">see more</span><BsArrowRightCircle /></span></Link>
                                     </div>
