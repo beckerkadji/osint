@@ -28,3 +28,9 @@ body {
 .search{
     overflow-x: scroll !important;
 }
+
+
+
+.phonesearch:invalid, .usernamesearch:invalid{
+    border: 3px solid red;
+}

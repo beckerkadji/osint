@@ -1,26 +1,16 @@
-import Tree from 'react-d3-tree';
 import Link from "next/link";
-import { MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
-import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlineMail, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
-import { toast } from "react-toastify";
+import { MutableRefObject, useRef, useEffect, useState } from "react";
 import React from 'react';
 import { useRouter } from "next/router";
-import { apiKey, storage } from "../../app/utils/utils";
-import { useAuth } from "../../app/layouts/AuthLayout";
-import { HiUsers } from "react-icons/hi";
-import { CiLocationOn } from "react-icons/ci";
-import { FiMenu } from "react-icons/fi";
-import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
+import { storage } from "../../app/utils/utils";
 import { useForm } from 'react-hook-form';
 import UserType from '../../app/_types/User.type';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search, searchUsername } from '../../app/authApi/api';
 import Image from 'next/image';
-import {  GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Map, Marker } from "pigeon-maps"
-import { data } from 'autoprefixer';
-import { phoneCheck, usernameCheck } from '../../app/utils/utils';
+import { phoneCheck } from '../../app/utils/utils';
 import Header from '../../app/components/Header';
 
 
@@ -36,10 +26,8 @@ export default function Search() {
   const [load, setLoad] = useState<boolean>(false)
   const [displayMap, setDisplayMap] = useState<boolean>(false)
   const [center, setCenter] = useState<any>([4.057083, 9.758146])
-  const [zoom, setZoom] = useState(11)
   const [link, setLink] = useState<any>()
   const [moment, setMoment] = useState<any>();
-  const [field, setField] = useState<any>();
 
   useEffect( ()=> {
     phoneDiv.current.classList.add('hidden')
@@ -52,7 +40,6 @@ export default function Search() {
     handleSubmit
     } = useForm<UserType.searchFields>({ resolver: joiResolver(searchSchema)})
 
-  const token: any = localStorage.getItem('token')
   useEffect(()=>{
       if(localStorage.getItem('token') === "undefined" || localStorage.getItem('token') === null ){
           storage.removeToken()
@@ -60,21 +47,7 @@ export default function Search() {
           router.push('/login')
         }
   }, [router])
-
-  const sideNavBar = useRef() as MutableRefObject<HTMLDivElement>
-   
-  const {logout} = useAuth()
   
-  const openSideNav = ()=>{
-      sideNavBar.current.style.width = "200px";
-      sideNavBar.current.style.opacity = "1";
-      // section.current.style.marginLeft ="200px";
-  }
-  const closeSideNav = () => {
-      sideNavBar.current.style.width = "0"
-      // section.current.style.marginLeft ="0";
-  }
-
   const changeMap = (long: any, lat:any, moment: any) =>{
     setDisplayMap(false)
     setMoment(moment)
@@ -82,29 +55,18 @@ export default function Search() {
     setDisplayMap(true)
   }
 
-  const onLogout = async () => {
-      const res = await logout(token)
-      if (res.data.code === "success"){
-          storage.removeToken()
-          storage.clearData()
-          router.push('/login')
-      }else{
-          toast.error(res.data.message)
-      }
-  }
-
   const onSearch = async (data: any) => {
-    if(!phoneCheck.test(data.key)){
-        setDisplayMap(false)
-        setLoadUsername(true)
-        if(!phoneDiv.current?.classList.contains('hidden')){
-            phoneDiv.current?.classList.add('hidden')
-        }
-        usernameDiv.current?.classList.remove('hidden')
-        let res: any = await searchUsername(data)
-        setLoadUsername(false)
-        setUsernameData(res.data)
-    }else{
+    // if(!phoneCheck.test(data.key)){
+    //     setDisplayMap(false)
+    //     setLoadUsername(true)
+    //     if(!phoneDiv.current?.classList.contains('hidden')){
+    //         phoneDiv.current?.classList.add('hidden')
+    //     }
+    //     usernameDiv.current?.classList.remove('hidden')
+    //     let res: any = await searchUsername(data)
+    //     setLoadUsername(false)
+    //     setUsernameData(res.data)
+    // }else{
         setDisplayMap(false)
         setLoad(true)
         if(!usernameDiv.current?.classList.contains('hidden')){
@@ -125,19 +87,19 @@ export default function Search() {
             setLoad(false)
         }
     }
-  }
+
     return  (
        <>
             <section className="h-screen relative ">
                 {/* <Header /> */}
-                    <Header />
+                    <Header page={'Phone search'}/>
                 {/* end header*/}
                 <div className="search absolute phone:overflow-auto laptop:overflow-scroll desktop:w-[80%] phone:left-0 laptop:left-auto laptop:right-0 top-[15%] laptop:w-[83%] phone:w-full phone:h-screen w-[80%] z-0 left-[18%]  text-gray-300 text-xs phone:flex-col tablet:h-[90%] laptop:flex laptop:z-0 laptop:flex-row justify-end">
                     <div className="flex justify-end w-full laptop:w-full">
                         <div className="relative mb-0 w-full flex  flex-col  laptop:rounded-lg laptop:mx-2 text-white phone:justify-center phone:items-center tablet:justify-end items-end">
                             <div className='w-full flex justify-center mb-4'>
                                 <form onSubmit={handleSubmit(onSearch)} className="input-group relative flex mt-2 phone:w-[95%]  tablet:w-1/2 phone:ml-0 flex-wrap w-1/2 items-stretch w-full mb-0">
-                                    <input type="search" {...register('key')} className="form-control  relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blackcolor focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon2" />
+                                    <input type="search" {...register('key')} className="phonesearch form-control  relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white" placeholder="exemple: 23760000000" pattern="[0-9]+" aria-label="Search" aria-describedby="button-addon2" />
                                     <button className="btn inline-block px-6 py-3.5 bg-thirdcolor text-blackcolor font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blackcolor hover:text-white hover:shadow-lg focus:bg-blackcolor focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blackcolor active:shadow-lg transition duration-150 ease-in-out flex items-center" type="submit" id="button-addon2" >
                                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" className="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                         <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>

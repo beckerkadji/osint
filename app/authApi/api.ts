@@ -132,6 +132,13 @@ export const createSearch = async (data: UserType.searchFields) =>{
     return await axios.post(`${Targeting}/target/create`, data)
 }
 
+export const getUsernameStat = async () => {
+    return await axios.get(`${UserNameService}/search/stat`)
+}
+
+export const getPhonestat = async () => {
+    return await axios.get(`${Targeting}/target/stat`)
+}
 
 
 export const getUserProfile = async () => {
