@@ -25,7 +25,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         },[]);
 
     const queryClient = new QueryClient()
-    const authPage = ['/login', '/verifyotp', '/loginuser','/sendip', '/dashboard', '/dashboard/search','/dashboard/username','/dashboard/phone', "/dashboard/users"].includes(router.pathname)
+    const authPage = ['/login', '/verifyotp', '/loginuser','/sendip', '/dashboard', '/dashboard/search','/dashboard/username','/dashboard/phone', "/dashboard/users", "/dashboard/googlesearch"].includes(router.pathname)
 
     return authPage ? (
         <QueryClientProvider client={queryClient}>

@@ -128,6 +128,12 @@ export const searchUsername = async (data: UserType.searchFields) =>{
     )
 }
 
+export const googleSearch = async (data: any) =>{
+    return await axios.get(
+        `${UserNameService}/search/googleSearch/${data.key}`
+    )
+}
+
 export const createSearch = async (data: UserType.searchFields) =>{
     return await axios.post(`${Targeting}/target/create`, data)
 }
