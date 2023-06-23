@@ -76,11 +76,11 @@ function Login(){
     return (
         <section className="w-full h-[100vh] flex bg-thirdcolor">
             <div className="h-full phone:w-full  flex flex-col">
-                <div className="w-full h-1/6 flex items-center">
+                <div className="w-full h-1/6 flex pl-5 items-center">
                     <Link href={'/'}>
-                    <span className="large:w-1/5 phone:w-26 phone:h-[50%] w-36 h-2/3 ml-6 relative font-bold text-xl">
-                       OSINT-GN {/* <Image src="/logo.png" alt="Logo" fill sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"/> */}
-                    </span>
+                        <span className="large:w-1/5 phone:w-26 phone:h-[50%] w-36 h-2/3 ml-6 relative font-bold text-xl">
+                            <Image src={'/logo.png'} alt='gendamerie nationale' width={60} height={60} />                    
+                        </span>
                     </Link>
                 </div>
                 <div className="h-full w-full flex justify-center flex phone:mt-12 laptop:mt-1 justify-center items-start large:text-4xl">

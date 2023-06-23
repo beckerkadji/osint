@@ -36,7 +36,8 @@ module.exports = {
             colors: {
                 blackcolor: "#212529",
                 whitecolor: "#FCFCFC",
-                thirdcolor: "#F3F4F6"
+                thirdcolor: "#F3F4F6",
+                logocolor: "#8e722d"
             }
         },
     },

@@ -29,7 +29,10 @@ body {
     overflow-x: scroll !important;
 }
 
-
+.logo{
+    transform: translate(20%,20%);
+    color: #8e722d;
+}
 
 .phonesearch:invalid, .usernamesearch:invalid{
     border: 3px solid red;

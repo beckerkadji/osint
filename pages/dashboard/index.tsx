@@ -14,6 +14,7 @@ import React from 'react';
 import { useRouter } from "next/router";
 import { storage } from "../../app/utils/utils";
 import { useAuth } from "../../app/layouts/AuthLayout";
+import Image from "next/image";
 
 
 export default function Dashboard() {
@@ -124,9 +125,10 @@ export default function Dashboard() {
             </div>
             <div className="index h-full w-[20%] phone:hidden laptop:block desktop:fixed bg-white">
                 <div className="phone:hidden laptop:relative laptop:block h-full flex flex-col justify-between border-r-2 border-thirdcolor">
-                    <div className="h-[13%] w-full flex justify-center items-center">
-                        <span className="flex  items-center w-1/4 h-14">
-                            <span className="font-bold text-xl mr-2">OSINT</span>
+                <div className="h-[13%] w-full flex relative">
+                        <span className="logo flex items-center w-1/2 h-14 absolute top-3 ml-[10%]">
+                            <Image src={'/logo.png'} alt='logo gendamerie nationale' width={50} height={50}/>
+                            <span className="font-bold text-sm mr-2 text-logocolor">OSINT</span>
                         </span>
                     </div>
                     <div className="h-[60%] w-full flex justify-center">
