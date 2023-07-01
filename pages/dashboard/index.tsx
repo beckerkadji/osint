@@ -234,7 +234,7 @@ export default function Dashboard() {
                                             Found by phone
                                         </span>
                                         <hr className="border-4 font-bold border-slate-200 h-2 my-2 w-1/2"/>
-                                        <span className="font-bold phone:text-xl tablet:text-3xl laptop:text-4xl text-blackcolor">
+                                        <span className="font-bold phone:text-xl tablet:text-2xl laptop:text-3xl text-blackcolor">
                                             { phoneStat.data ? `${phoneStat.data.data.total}` : '...' }
                                         </span>
                                         <span className="absolute tablet:block phone:hidden top-3 right-3 text-red-400 text-xs">
@@ -251,7 +251,7 @@ export default function Dashboard() {
                                             Found by username
                                         </span>
                                         <hr className="border-4 font-bold border-indigo-200 h-2 my-2 w-1/2"/>
-                                        <span className="font-bold phone:text-xl tablet:text-3xl laptop:text-4xl text-blackcolor">
+                                        <span className="font-bold phone:text-xl tablet:text-2xl laptop:text-3xl text-blackcolor">
                                             { usernameStat.data ? `${usernameStat.data.data.total}` : '...' }
                                         </span>
                                         <span className="absolute tablet:block phone:hidden top-3 right-3 text-red-400 text-xs">
