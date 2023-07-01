@@ -214,10 +214,10 @@ export default function Dashboard() {
                                 <div  className="w-[30%]  relative h-full bg-thirdcolor rounded-lg flex justify-center items-center">
                                     <div className="flex flex-col w-full p-2"> 
                                         <span className="text-blackcolor text-xs">
-                                            Found by email
+                                            By email
                                         </span>
                                         <hr className="border-4 font-bold border-green-200 h-2 my-2 w-1/2"/>
-                                        <span className="font-bold phone:text-xl tablet:text-3xl laptop:text-4xl text-blackcolor">
+                                        <span className="font-bold phone:text-xl tablet:text-2xl laptop:text-3xl text-blackcolor">
                                             0{/* { usernameStat.data ? `${usernameStat.data.data.total}` : 'loading...' } */}
                                         </span>
                                         <span className="absolute tablet:block phone:hidden top-3 right-3 text-red-400 text-xs">
@@ -231,7 +231,7 @@ export default function Dashboard() {
                                 <div  className="w-[30%]  relative  h-full bg-thirdcolor rounded-lg flex justify-center items-center">
                                     <div className="flex flex-col w-full p-2"> 
                                         <span className="text-blackcolor text-xs">
-                                            Found by phone
+                                            By phone
                                         </span>
                                         <hr className="border-4 font-bold border-slate-200 h-2 my-2 w-1/2"/>
                                         <span className="font-bold phone:text-xl tablet:text-2xl laptop:text-3xl text-blackcolor">
@@ -248,7 +248,7 @@ export default function Dashboard() {
                                 <div  className="w-[30%] relative h-full bg-thirdcolor rounded-lg flex justify-center items-center phone:-z-10 laptop:z-10">
                                 <div className="flex flex-col w-full p-2"> 
                                         <span className="text-blackcolor text-xs">
-                                            Found by username
+                                            By username
                                         </span>
                                         <hr className="border-4 font-bold border-indigo-200 h-2 my-2 w-1/2"/>
                                         <span className="font-bold phone:text-xl tablet:text-2xl laptop:text-3xl text-blackcolor">
