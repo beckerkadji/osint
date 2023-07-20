@@ -1,4 +1,4 @@
-import Link from "next/link";
+ import Link from "next/link";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import React from 'react';
 import { useRouter } from "next/router";
@@ -94,7 +94,7 @@ export default function Search() {
                                 {loadUsername ? 
                                     <div className='text-white bg-opacity-10 bg-gray-900 text-blackcolor laptop:rounded-lg flex justify-center items-center w-full h-full'>
                                         <div
-                                            className="inline-block h-20 w-20 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                            className="inline-block  border-blackcolor h-20 w-20 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                                             role="status">
                                             <span  className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
                                             >Loading...</span>

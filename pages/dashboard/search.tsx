@@ -1,26 +1,16 @@
-import Tree from 'react-d3-tree';
 import Link from "next/link";
-import { MutableRefObject, RefObject, useEffect, useRef, useState } from "react";
-import { AiFillDashboard, AiOutlineClose, AiOutlineLogout, AiOutlineMail, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
-import { toast } from "react-toastify";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import React from 'react';
 import { useRouter } from "next/router";
-import { apiKey, storage } from "../../app/utils/utils";
-import { useAuth } from "../../app/layouts/AuthLayout";
-import { HiUsers } from "react-icons/hi";
-import { CiLocationOn } from "react-icons/ci";
-import { FiMenu } from "react-icons/fi";
-import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
+import { storage } from "../../app/utils/utils";
 import { useForm } from 'react-hook-form';
 import UserType from '../../app/_types/User.type';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { searchSchema } from '../../app/_validations/user.validation';
 import { createSearch, search, searchUsername } from '../../app/authApi/api';
 import Image from 'next/image';
-import {  GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Map, Marker } from "pigeon-maps"
-import { data } from 'autoprefixer';
-import { phoneCheck, usernameCheck } from '../../app/utils/utils';
+import { phoneCheck } from '../../app/utils/utils';
 import Header from '../../app/components/Header';
 
 
@@ -52,7 +42,6 @@ export default function Search() {
     handleSubmit
     } = useForm<UserType.searchFields>({ resolver: joiResolver(searchSchema)})
 
-  const token: any = localStorage.getItem('token')
   useEffect(()=>{
       if(localStorage.getItem('token') === "undefined" || localStorage.getItem('token') === null ){
           storage.removeToken()
@@ -61,36 +50,11 @@ export default function Search() {
         }
   }, [router])
 
-  const sideNavBar = useRef() as MutableRefObject<HTMLDivElement>
-   
-  const {logout} = useAuth()
-  
-  const openSideNav = ()=>{
-      sideNavBar.current.style.width = "200px";
-      sideNavBar.current.style.opacity = "1";
-      // section.current.style.marginLeft ="200px";
-  }
-  const closeSideNav = () => {
-      sideNavBar.current.style.width = "0"
-      // section.current.style.marginLeft ="0";
-  }
-
   const changeMap = (long: any, lat:any, moment: any) =>{
     setDisplayMap(false)
     setMoment(moment)
     setCenter([lat, long])
     setDisplayMap(true)
-  }
-
-  const onLogout = async () => {
-      const res = await logout(token)
-      if (res.data.code === "success"){
-          storage.removeToken()
-          storage.clearData()
-          router.push('/login')
-      }else{
-          toast.error(res.data.message)
-      }
   }
 
   const onSearch = async (data: any) => {

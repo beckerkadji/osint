@@ -111,7 +111,7 @@ function LoginUser(){
                                     id="floating_password"
                                     onChange={CheckPassword}
                                     ref={(e: any) =>{ref(e); inputPassword.current = e}}
-                                    className="block py-2 large:py-5 large:text-4xl px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-400 focus:outline-none focus:ring-0 focus:border-gray-400 peer"
+                                    className="inputtype block py-2 large:py-5 large:text-4xl px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-400 focus:outline-none focus:ring-0 focus:border-gray-400 peer"
                                     placeholder=" " 
                                     required 
                                 />

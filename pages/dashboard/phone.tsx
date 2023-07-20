@@ -56,17 +56,6 @@ export default function Search() {
   }
 
   const onSearch = async (data: any) => {
-    // if(!phoneCheck.test(data.key)){
-    //     setDisplayMap(false)
-    //     setLoadUsername(true)
-    //     if(!phoneDiv.current?.classList.contains('hidden')){
-    //         phoneDiv.current?.classList.add('hidden')
-    //     }
-    //     usernameDiv.current?.classList.remove('hidden')
-    //     let res: any = await searchUsername(data)
-    //     setLoadUsername(false)
-    //     setUsernameData(res.data)
-    // }else{
         setDisplayMap(false)
         setLoad(true)
         if(!usernameDiv.current?.classList.contains('hidden')){

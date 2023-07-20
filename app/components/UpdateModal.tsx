@@ -1,15 +1,15 @@
 import { joiResolver } from "@hookform/resolvers/joi"
-import { MutableRefObject, useRef } from "react"
+import { MutableRefObject, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
-import { useAuth } from "../layouts/AuthLayout"
-import UserType from "../_types/User.type"
-import { createUserSchema, updatePasswordSchema, updateUserSchema } from "../_validations/user.validation"
+import UserType, { PERMISSION } from "../_types/User.type"
+import { updatePasswordSchema, updateUserSchema } from "../_validations/user.validation"
 import { AiOutlineUser } from "react-icons/ai"
 import { useMutation } from "react-query"
-import { updateUser } from "../authApi/api"
+import { updatePermissions, updateUser } from "../authApi/api"
 import { toast } from "react-toastify"
 
 export default function UpdateModal (props: any) {
+
     const {
         register: registerUpdateUser,  
         formState:{ errors: errorsUpdateUser },
@@ -24,13 +24,9 @@ export default function UpdateModal (props: any) {
 
     const inputPassword = useRef() as MutableRefObject<HTMLDivElement>
     const Permissions = useRef() as MutableRefObject<HTMLDivElement>
-    
-    const {register: registerAuth, isRegistering} = useAuth();
 
-    const {isLoading: isUpdateUser, mutateAsync: mutateAsyncUpdateUser} = useMutation(async (data: any) =>{
-        console.log("Send",data) 
+    const {isLoading: isUpdateUser, mutateAsync: mutateAsyncUpdateUser} = useMutation(async (data: any) =>{ 
         const res =  await updateUser(data, props.token, props.data?.id)
-        console.log(res)
         return res
     })
 
@@ -44,9 +40,7 @@ export default function UpdateModal (props: any) {
     }
 
     const {isLoading: isUpdatePassword, mutateAsync: mutateAsyncUpdatePassword} = useMutation(async (data: any) =>{
-        console.log("Send",data) 
         const res =  await updateUser(data, props.token, props.data?.id)
-        console.log(res)
         return res
     })
 
@@ -59,7 +53,27 @@ export default function UpdateModal (props: any) {
         } 
     }
 
+        //PERMISSION 
+        const {
+            register: registerPermission,  
+            formState:{ errors: errorsPermissions },
+            handleSubmit: handleSubmitPermission
+        } = useForm<UserType.givePermissionFields>()
     
+        const {isLoading: isUpdatePermissions, mutateAsync: mutateAsyncUpdatePermissions} = useMutation(async (data: any) =>{
+            const res =  await updatePermissions(data, props.token, props.data?.id)
+            return res
+        })
+    
+        const onPermissions = async (data:any) =>{
+            const res =  await mutateAsyncUpdatePermissions(data)
+            if(res.data.code === "success"){
+                toast.success(res.data.message)
+            } else {
+                toast.error(res.data.message);
+            } 
+        }
+        
     return(
         <>
             {/* Update User Modal */}
@@ -165,19 +179,19 @@ export default function UpdateModal (props: any) {
                                         <div className="flex justify-between w-3/4">
                                             
                                             <div className="form-check">
-                                                <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault1"  defaultChecked={props.data?.role.id == 2 ? true: false}  value={'admin'} {...registerUpdateUser("role")} />
+                                                <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault1"  defaultChecked={props.data?.role.id == 2 ? true: false}  value={'admin'} {...registerUpdateUser('role')}/>
                                                 <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1" >
                                                     Admin
                                                 </label>
                                             </div> 
                                             <div className="form-check">
-                                                <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault2"  defaultChecked={props.data?.role.id == 3 ? true: false}  value={'user'} {...registerUpdateUser("role")} />
+                                                <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault2" defaultChecked={props.data?.role.id == 3 ? true: false}  value={'user'} {...registerUpdateUser('role')} />
                                                 <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault2">
                                                     user
                                                 </label>
                                             </div>
                                             <div className="form-check">
-                                                <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault3"  defaultChecked={props.data?.role.id == 4 ? true: false}  value={'intern'} {...registerUpdateUser("role")}/>
+                                                <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault3"    defaultChecked={props.data?.role.id == 4 ? true: false}  value={'intern'} {...registerUpdateUser('role')}/>
                                                 <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault3">
                                                     intern
                                                 </label>
@@ -204,7 +218,7 @@ export default function UpdateModal (props: any) {
                                     data-bs-dismiss="modal">
                                     Close
                                     </button>
-                                    { isRegistering ?
+                                    { isUpdateUser ?
                                         <button disabled type="button" className="inline-block px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
                                             <svg aria-hidden="true" role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
@@ -238,9 +252,9 @@ export default function UpdateModal (props: any) {
                                     <span className="relative h-9 w-9 bg-gray-300 rounded-full flex justify-center items-center">
                                         <AiOutlineUser />
                                     </span>
-                                    <div className="laptop:flex flex-col laptop:p-2 phone:px-4 justify-center items-start h-8">
-                                        <span className="text-[12px] font-bold mt-2"><span className="flex items-center">{props.data?.username}</span></span>
-                                        <span className="text-xs -translate-y-1 text-gray-700">{props.data?.firstname}</span>
+                                    <div className="laptop:flex relative flex-col laptop:py-0 phone:px-4  justify-between items-start h-10">
+                                        <span className="text-[12px] font-bold mt-2 "><span className="flex items-center">{props.data?.firstname}</span></span>
+                                        <span className="text-xs absolute top-5  left-4 text-gray-700">{props.data?.lastname}</span>
                                     </div>
                                 </button>
                             </div>
@@ -264,6 +278,9 @@ export default function UpdateModal (props: any) {
                                             m-0
                                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
                                             placeholder="New Password" {...registerPassword("password")}/>
+                                    </div>
+                                    <div className="text-red-500 translate-y-4 text-sm flex flex-col justify-center items-center  mb-10 py-10">
+                                        {errorsPassword.password && <p>{errorsPassword.password.message}</p>}
                                     </div>
                                     
                                     <div
@@ -310,43 +327,99 @@ export default function UpdateModal (props: any) {
                                     </span>
                                     <div className="laptop:flex flex-col laptop:p-2 phone:px-4 justify-center items-start h-8">
                                         <span className="text-[12px] font-bold mt-2"><span className="flex items-center">{props.data?.username}</span></span>
-                                        <span className="text-xs -translate-y-1 text-gray-700">{props.data?.firstname}</span>
+                                        <span className="text-xs -translate-y-1 text-gray-700">{props.data?.name}</span>
                                     </div>
                                 </button>
                             </div>
-                            <div ref={Permissions} className="flex w-full justify-center">
+                            <div ref={Permissions} className="flex w-full justify-center flex-col items-center">
+
+                                <hr className="w-full border-[1px] border-blackcolor mt-5"/>
                                 <div className="w-full p-4">
-                                    <form className="">
-                                        <div className="flex flex-col w-full justify-center items-center mt-4 mb-6">
+                                    <form className="" onSubmit={handleSubmitPermission(onPermissions)}>
+                                        <div className="flex flex-col w-full text-sm justify-center items-center mt-4 mb-6">
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     READ USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' {...registerPermission('permissions')} value={PERMISSION.READ_USER} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     EDIT USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.EDIT_USER} {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around  w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     DELETE USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input  type='checkbox' value={PERMISSION.READ_USER}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3 text-gray-800" htmlFor="flexCheckChecked">
                                                     BLOCK USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.BLOCK_USER} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                             <div className="form-check flex justify-around w-2/3">
                                                 <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
                                                     INVITE USERS
                                                 </label>
-                                                <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckChecked" />
+                                                <input type='checkbox' value={PERMISSION.INVITE_USER}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    ADD PERMISSION
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.ADD_PERMISSION}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    REMOVE PERMISSION
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.REMOVE_PERMISSION} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    CHANGE ROLE
+                                                </label>
+                                                <input  type='checkbox' value={PERMISSION.CHANGE_ROLE}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    READ SESSION
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.READ_SESSION}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    LOGOUT SESSION
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.LOGOUT_SESSION} {...registerPermission('permissions')} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    ADD TARGET
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.ADD_TARGET} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    EDIT TARGET
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.EDIT_TARGET} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    REMOVE TARGET
+                                                </label>
+                                                <input type='checkbox' value={PERMISSION.REMOVE_TARGET} {...registerPermission('permissions')}   className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                            </div>
+                                            <div className="form-check flex justify-around w-2/3">
+                                                <label className="form-check-label w-2/3  text-gray-800" htmlFor="flexCheckChecked">
+                                                    ADD SUP SEARCH
+                                                </label>
+                                                <input  type='checkbox' value={PERMISSION.READ_USER}  {...registerPermission('permissions')}  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blackcolor checked:border-gray-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"   />
                                             </div>
                                         </div>
                                         <div
@@ -356,7 +429,7 @@ export default function UpdateModal (props: any) {
                                             data-bs-dismiss="modal">
                                             Close
                                             </button>
-                                            { isRegistering ?
+                                            { isUpdatePermissions ?
                                                 <button disabled type="button" className="inline-block px-6 py-2.5 bg-gray-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-700 hover:shadow-lg focus:bg-gray-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
                                                     <svg aria-hidden="true" role="status" className="inline mr-3 w-4 h-4 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>

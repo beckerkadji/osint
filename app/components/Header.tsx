@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { MutableRefObject, useRef } from "react";
-import { AiFillDashboard, AiOutlineClose, AiOutlineLogout,AiOutlineGoogle, AiOutlineMail, AiOutlinePhone, AiOutlineSearch, AiOutlineSetting, AiOutlineUser } from "react-icons/ai";
-import { CiLocationOn } from "react-icons/ci";
+import { AiFillDashboard, AiOutlineClose, AiOutlineLogout,AiOutlineGoogle, AiOutlinePhone, AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
 import { HiUsers } from "react-icons/hi";
 import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
@@ -97,7 +96,7 @@ export default function Header (props: any){
             </div>
 
             <div className="index h-[13%] phone:w-full flex items-center justify-between desktop:w-[80%] fixed z-100 desktop:right-0 bg-white border-[1px] border-gray-100">
-                <div className="phone:hidden laptop:block ml-4 w-[35%] text-center text-xl font-bold">
+                <div className="phone:hidden laptop:block w-[35%] phone:text-center laptop:text-start laptop:px-4 text-xl font-bold">
                     {props.page}
                 </div>
                 <div className="laptop:hidden flex w-1/2 h-[80%] justify-start items-center text-gray-800 relative">
@@ -132,12 +131,6 @@ export default function Header (props: any){
                             className="index dropdown-menu min-w-max absolute duration-100 easy-in-out hidden bg-white text-base phone:z-100 z-50 phone:-translate-x-[75px] float-left text-left mt-5 bg-clip-padding  border-none mr-1/2"
                             aria-labelledby="dropdownMenuButton1"
                         >
-                            <li>
-                                <button className="dropdown-item flex items-center text-sm py-3 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-200">
-                                    <AiOutlineSetting/>
-                                    <span className="ml-2">setting</span>
-                                </button>
-                            </li>
                             <li>
                                 <button 
                                     onClick={onLogout}

@@ -95,7 +95,7 @@ function Login(){
                             <div className="relative z-0 mb-6 w-2/3 phone:w-4/5 large:w-3/4 group">
                                 <input
                                     type="text"  id="floating_username"
-                                    className="block py-2 large:py-5 px-0 w-full large:text-4xl text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-400 focus:outline-none focus:ring-0 focus:border-gray-400 peer" placeholder=" " required 
+                                    className="inputtype block py-2 large:py-5 px-0 w-full large:text-4xl text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-400 focus:outline-none focus:ring-0 focus:border-gray-400 peer" placeholder=" " required 
                                     {...register("username")}
                                 />
                                 <label htmlFor="floating_username" className="peer-focus:font-medium absolute  large:text-4xl text-sm text-gray-400 dark:text-gray-400 duration-200 transform -translate-y-4 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Username</label>
@@ -110,7 +110,7 @@ function Login(){
                                     id="floating_password"
                                     onChange={CheckPassword}
                                     ref={(e: any) =>{ref(e); inputPassword.current = e}}
-                                    className="block py-2 large:py-5 large:text-4xl px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-400 focus:outline-none focus:ring-0 focus:border-gray-400 peer"
+                                    className="inputtype block py-2 large:py-5 large:text-4xl px-0 w-full text-sm text-black bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-400 focus:outline-none focus:ring-0 focus:border-gray-400 peer"
                                     placeholder=" " 
                                     required 
                                 />
