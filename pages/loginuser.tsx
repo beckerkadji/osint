@@ -144,51 +144,6 @@ function LoginUser(){
                     </form>
                 </div>
             </div>
-
-            {/*<div className="relative bg-gray-600 h-full phone:hidden desktop:block w-1/2">
-                <div id="carouselExampleCaptions" className="carousel slide carousel-fade relative h-full" data-bs-ride="carousel">
-                    <div className="carousel-inner  relative h-full w-full overflow-hidden">
-                        <div className="carousel-item active relative float-left h-full w-full">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src="/slide1.jpg" 
-                                    fill 
-                                    priority
-                                    sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-                                    className="absolute b brightness-60 block w-full" alt="..."
-                                 />    
-                            </div>
-                        <div className="carousel-caption  md:block top-2/3 absolute">
-                            <h5 className="text-4xl fond-bold mb-8">First slide label</h5>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur, 
-                                adipisicing elit. Dicta tempore consequuntur quibusdam !
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Slider 2 
-                    <div className="carousel-item relative float-left h-full w-full">
-                        <div className="relative w-full h-full">
-                            <Image 
-                                src="/slide2.jpg" 
-                                fill 
-                                priority
-                                sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-                                className="absolute block brightness-60 w-full" 
-                                alt="..." />    
-                        </div>
-                        <div className="carousel-caption md:block absolute  top-2/3 ">
-                            <h5 className="text-4xl fond-bold mb-8">Second slide label</h5>
-                            <p>
-                                perferendis quidem. Dolore,in fugit eveniet excepturi ipsam illum distinctio.
-                            </p>
-                        </div>
-                    </div>
-
-                    </div>
-                </div>
-            </div>*/} 
             
         </section>  
     )

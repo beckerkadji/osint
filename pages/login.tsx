@@ -25,11 +25,11 @@ function Login(){
         }
     }, [router])
 
-    console.log('token', localStorage.getItem('token'))
 
     const [isPassword, setIsPassword] = useState(false)
     const [visible, setVisible] = useState(false)
     const inputPassword = useRef() as MutableRefObject<HTMLInputElement>
+    const btnSubmit =  useRef() as MutableRefObject<HTMLButtonElement>
     
     const CheckPassword = (e: any)=>{
         if(e.target.value === null || e.target.value === undefined || e.target.value === ''){
@@ -115,8 +115,8 @@ function Login(){
                                     required 
                                 />
                                 <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-sm  large:text-4xl text-gray-500 dark:text-gray-400 duration-200 transform -translate-y-4 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Password</label>
-                                <span className={`absolute ${isPassword == false? "hidden":null} right-2 inset-y-1/2`}>{visible == false ? <button onClick={showPassword} className="cursor-pointer -translate-y-2"><BiHide /></button> : 
-                                <button onClick={showPassword}className="cursor-pointer -translate-y-2 "><BiShow/></button> }</span>
+                                <span className={`absolute ${isPassword == false? "hidden":null} right-2 inset-y-1/2`}>{visible == false ? <Link href={''} onClick={showPassword} className="cursor-pointer -translate-y-2"><BiHide /></Link> : 
+                                <Link href={''} className="cursor-pointer -translate-y-2 "><BiShow/></Link> }</span>
                             </div>
                         </div>
                         {/* <div className="w-full flex justify-center text-end -translate-y-5">
@@ -133,7 +133,7 @@ function Login(){
                                 Loading...
                                 </button>   
                             :
-                                <button type="submit" className="border-[1px] w-4/5 phone:w-4/5 large:w-3/4 text-white bg-gray-900 hover:bg-gray-900 focus:outline-none font-medium rounded-lg  large:text-4xl text-sm py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 large:py-4  dark:border-gray-700">Log in</button>
+                                <button type="submit" ref={btnSubmit} className="border-[1px] w-4/5 phone:w-4/5 large:w-3/4 text-white bg-gray-900 hover:bg-gray-900 focus:outline-none font-medium rounded-lg  large:text-4xl text-sm py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 large:py-4  dark:border-gray-700">Log in</button>
                             }
                         </div>
 
@@ -144,51 +144,6 @@ function Login(){
                     </form>
                 </div>
             </div>
-
-            {/* <div className="relative bg-gray-600 h-full phone:hidden desktop:block w-1/2">
-                <div id="carouselExampleCaptions" className="carousel slide carousel-fade relative h-full" data-bs-ride="carousel">
-                    <div className="carousel-inner  relative h-full w-full overflow-hidden">
-                        <div className="carousel-item active relative float-left h-full w-full">
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src="/slide1.jpg" 
-                                    fill 
-                                    priority
-                                    sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-                                    className="absolute b brightness-60 block w-full" alt="..."
-                                 />    
-                            </div>
-                        <div className="carousel-caption  md:block top-2/3 absolute">
-                            <h5 className="text-4xl fond-bold mb-8">First slide label</h5>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur, 
-                                adipisicing elit. Dicta tempore consequuntur quibusdam !
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Slider 2 
-                    <div className="carousel-item relative float-left h-full w-full">
-                        <div className="relative w-full h-full">
-                            <Image 
-                                src="/slide2.jpg" 
-                                fill 
-                                priority
-                                sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw, 33vw"
-                                className="absolute block brightness-60 w-full" 
-                                alt="..." />    
-                        </div>
-                        <div className="carousel-caption md:block absolute  top-2/3 ">
-                            <h5 className="text-4xl fond-bold mb-8">Second slide label</h5>
-                            <p>
-                                perferendis quidem. Dolore,in fugit eveniet excepturi ipsam illum distinctio.
-                            </p>
-                        </div>
-                    </div>
-
-                    </div>
-                </div>
-            </div>*/} 
             
         </section>  
     )

@@ -9,12 +9,12 @@ import LoginType from "../_types/Login.type";
 import UserType from "../_types/User.type";
 import RegisterType from "../_types/User.type";
 
-
 type AuthLayoutProps = {
     children : JSX.Element
 }
 
 const loginFn =  async (data: LoginType.loginFields) => {
+
     const response = await login(data)
     if(response.data.code === "success"){
         toast.success(response.data.message)

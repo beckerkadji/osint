@@ -2,7 +2,8 @@ export enum ROLE {
     ROOT = 1,
     ADMIN = 2,
     USER = 3,
-    INTERN = 4
+    INTERN = 4,
+    NOTHING = 0
 }
 
 export enum ROLE_HR {

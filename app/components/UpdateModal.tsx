@@ -10,6 +10,10 @@ import { toast } from "react-toastify"
 
 export default function UpdateModal (props: any) {
 
+    const closeModalUpdateUser = useRef() as MutableRefObject<HTMLButtonElement>
+    const closeModalUpdatePassword = useRef() as MutableRefObject<HTMLButtonElement>
+    const closeModalUpdatePermission = useRef() as MutableRefObject<HTMLButtonElement>
+
     const {
         register: registerUpdateUser,  
         formState:{ errors: errorsUpdateUser },
@@ -34,6 +38,7 @@ export default function UpdateModal (props: any) {
         const res = await mutateAsyncUpdateUser(data)
         if(res.data.code === "success"){
             toast.success(res.data.message)
+            closeModalUpdateUser.current.click();
         } else {
             toast.error(res.data.message);
         } 
@@ -48,6 +53,7 @@ export default function UpdateModal (props: any) {
         const res = await mutateAsyncUpdatePassword(data)
         if(res.data.code === "success"){
             toast.success(res.data.message)
+            closeModalUpdatePassword.current.click()
         } else {
             toast.error(res.data.message);
         } 
@@ -56,6 +62,7 @@ export default function UpdateModal (props: any) {
         //PERMISSION 
         const {
             register: registerPermission,  
+            reset,
             formState:{ errors: errorsPermissions },
             handleSubmit: handleSubmitPermission
         } = useForm<UserType.givePermissionFields>()
@@ -69,6 +76,10 @@ export default function UpdateModal (props: any) {
             const res =  await mutateAsyncUpdatePermissions(data)
             if(res.data.code === "success"){
                 toast.success(res.data.message)
+                reset({
+                    permissions: undefined
+                })
+                closeModalUpdatePermission.current.click()
             } else {
                 toast.error(res.data.message);
             } 
@@ -83,9 +94,9 @@ export default function UpdateModal (props: any) {
                     <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                         <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                             <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
-                                Update  user
+                                Update user
                             </h5>
-                            <button type="button"
+                            <button type="button" ref={closeModalUpdateUser}
                             className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
                             data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -177,6 +188,16 @@ export default function UpdateModal (props: any) {
                                     <div className="w-full ">
                                         <p>actual role for this user is {props.data?.role.name}</p>
                                         <div className="flex justify-between w-3/4">
+                                            {
+                                                localStorage.getItem('role_id') == '1' ? (
+                                                    <div className="form-check">
+                                                        <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault1" defaultChecked={props.data?.role.id == 1 ? true: false} {...registerUpdateUser("role")} value={'root'} />
+                                                        <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1">
+                                                            Root
+                                                        </label>
+                                                    </div>
+                                                ): null
+                                            }
                                             
                                             <div className="form-check">
                                                 <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault1"  defaultChecked={props.data?.role.id == 2 ? true: false}  value={'admin'} {...registerUpdateUser('role')}/>
@@ -285,7 +306,7 @@ export default function UpdateModal (props: any) {
                                     
                                     <div
                                         className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                        <button type="button"
+                                        <button type="button" ref={closeModalUpdatePassword}
                                         className="inline-block px-6 py-2.5 bg-gray-200 text-gray-800 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out"
                                         data-bs-dismiss="modal">
                                         Close
@@ -424,7 +445,7 @@ export default function UpdateModal (props: any) {
                                         </div>
                                         <div
                                             className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                                            <button type="button"
+                                            <button type="button" ref={closeModalUpdatePermission}
                                             className="inline-block px-6 py-2.5 bg-gray-200 text-gray-800 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out"
                                             data-bs-dismiss="modal">
                                             Close

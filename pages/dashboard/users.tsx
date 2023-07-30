@@ -23,20 +23,25 @@ export default function Users() {
             storage.removeToken()
             storage.clearData()
             router.push('/login')
-          }
+        }
+        
     }, [router])
+
+    console.log(localStorage.getItem('role_id'))
 
 
     const usertable = useRef() as MutableRefObject<HTMLDivElement>
     const [currentPage, setCurrentPage] = useState(0)
     const [totalItems, setTotalItems] = useState(0)
     const [user, setUser] = useState<any>()
+    const [validToken, setValidToken] = useState<boolean>(true)
     const ItemPerPage = 5   
     const token: any = localStorage.getItem('token')
 
     const userData = useQuery("userList", async () => {
         const response = await getAllUser(token)
-        if(response.data.message === 'NOT AUTHORIZED'){
+        if(response.data.code == 'not_authorized'){
+            setValidToken(false)
             storage.clearData()
             router.push('/login')
         }
@@ -98,7 +103,13 @@ export default function Users() {
                                     <tbody>
                                         {userData.isLoading ? <p>Loading...</p> : null}
                                         {
-                                            userData.data ? 
+                                            userData.data && validToken == true &&
+                                            (
+                                                localStorage.getItem('role_id') == '1' ||
+                                                localStorage.getItem('role_id') == '2' ||
+                                                localStorage.getItem('role_id') == '3'
+                                            )
+                                            ? 
                                             (
                                                 userData.data.map((user: any, key:number)=>(
                                                     <tr className="border-b hover:bg-gray-200" key={key}>

@@ -147,7 +147,7 @@ export const getPhonestat = async () => {
 }
 
 
-export const getUserProfile = async () => {
+export const getUserProfile = () => {
     if(
         storage.getToken() !== null &&
         storage.getToken() !== undefined

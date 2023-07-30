@@ -22,15 +22,13 @@ export default function Dashboard() {
           }
     }, [tokenU, router])
 
+    console.log(localStorage.getItem('role_id'))
+
     const main = useRef() as MutableRefObject<HTMLDivElement>
     const token: any = localStorage.getItem('token')
 
     const result = useQuery("sessionList", async () => {
         const response = await getSession(token)
-        if(response.data.message === 'NOT AUTHORIZED'){
-            storage.clearData()
-            router.push('/login')
-        }
         return response.data
     })
 
@@ -125,9 +123,15 @@ export default function Dashboard() {
                                 <span className="text-2xl ">Users connected</span>
                                 <hr className="w-1/3 border-2  border-gray-500"/>
                             </div>
+
                             <div className="w-full phone:h-[70%] phone:pt-5  tablet:pt-0 phone:flex phone:flex-col laptop:h-[70%] overflow-y-auto text-blackcolor">
+
                                 {
-                                    result.data  ? 
+                                    result.data && 
+                                    (
+                                        localStorage.getItem('role_id') == '1' ||
+                                        localStorage.getItem('role_id') == '2' 
+                                    )? 
                                     ( 
                                         result.data.data?.map((session: any, key:any) => (
                                             <div className="w-full flex phone:justify-between laptop:justify-around items-center laptop:px-0 phone:px-4 mb-6" key={session.user?.id} >
@@ -167,7 +171,7 @@ export default function Dashboard() {
                                             </div>
                                         ))
                                     ): (
-                                        <div className="text-center w-full">Loading sessions...</div>
+                                        <div className="text-center w-full"></div>
                                     )
                                 }
                             </div>

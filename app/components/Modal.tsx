@@ -1,16 +1,24 @@
 import { joiResolver } from "@hookform/resolvers/joi"
 import { useForm } from "react-hook-form"
 import { useAuth } from "../layouts/AuthLayout"
-import { generatePassword } from "../utils/utils"
-import UserType from "../_types/User.type"
+import { generatePassword, storage } from "../utils/utils"
+import UserType, { ROLE } from "../_types/User.type"
 import { createUserSchema } from "../_validations/user.validation"
+import { useRouter } from "next/router"
+import { MutableRefObject, useRef } from "react"
 
 export default function Modal (props: any) {
+
+    const router = useRouter();
     const {
         register,  
+        reset,
         formState:{ errors },
         handleSubmit
     } = useForm<UserType.createFields>({ resolver: joiResolver(createUserSchema)})
+
+    const closeModal = useRef() as MutableRefObject<HTMLButtonElement>
+
 
 
     const {register: registerAuth, isRegistering} = useAuth();
@@ -19,21 +27,33 @@ export default function Modal (props: any) {
         let token: string = props.token
         let password =  await generatePassword();
         data.password = password
-        await registerAuth({data, token})
+        let response: any = await registerAuth({data, token})
+        console.log(response.data.code)
+        if(response.data.code === "success"){
+            closeModal.current.click();
+            reset({
+                lastname: '',
+                firstname: '',
+                role: ROLE.NOTHING,
+                email: '',
+                blocked_at: new Date('YYYY-MM-DD'),
+                username: ''
+            })
+        }
     }
     
     return(
         <>
             {/* Add User Modal */}
             <div className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                id="staticBackdrop" tabIndex={2} data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                id="staticBackdrop" tabIndex={2}  data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xs relative w-auto pointer-events-none">
                     <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                         <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                             <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
                                 Create new user
                             </h5>
-                            <button type="button"
+                            <button type="button" ref={closeModal}
                             className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
                             data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -115,9 +135,9 @@ export default function Modal (props: any) {
                                 <div className="flex justify-center">
                                     <div className="w-full">
                                         <div className="datepicker relative form-floating mb-3 xl:w-96" data-mdb-toggle-button="false">
-                                            <input type="text"
+                                            <input type="date"
                                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blackcolor focus:outline-none"
-                                            placeholder="Select a date" data-mdb-toggle="datepicker" {...register("blocked_at")} />
+                                            placeholder="Select a date"  {...register("blocked_at")} />
                                             <label htmlFor="floatingInput" className="text-gray-700">blocked to</label>
                                         </div>
                                     </div>
@@ -125,6 +145,16 @@ export default function Modal (props: any) {
                                 <div className="flex justify-center mt-4">
                                     <div className="w-full ">
                                         <div className="flex justify-between w-3/4">
+                                            {
+                                                localStorage.getItem('role_id') == '1' ? (
+                                                    <div className="form-check">
+                                                        <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault1" {...register("role")} value={'root'} />
+                                                        <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1">
+                                                            Root
+                                                        </label>
+                                                    </div>
+                                                ): null
+                                            }
                                             <div className="form-check">
                                                 <input className="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blackcolor checked:border-blackcolor focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" id="flexRadioDefault1" {...register("role")} value={'admin'} />
                                                 <label className="form-check-label inline-block text-gray-800" htmlFor="flexRadioDefault1">
